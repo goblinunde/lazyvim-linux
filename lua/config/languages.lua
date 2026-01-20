@@ -33,11 +33,27 @@ M.languages = {
   -- 💡 可选支持的语言 (Optional Languages)
   -- 默认禁用，可按需启用
   -- ========================================
-  go = false, -- Go: 需要安装 gopls + goimports + delve
-  java = false, -- Java: 需要安装 jdtls + google-java-format
-  typescript = false, -- TypeScript: 需要安装 tsserver + prettier
-  javascript = false, -- JavaScript: 需要安装 tsserver + prettier
-  bash = false, -- Bash: 需要安装 bash-language-server + shfmt
+  
+  -- 系统编程语言 (Systems Programming)
+  go = false, -- Go: gopls + goimports + delve
+  zig = false, -- Zig: zls + zig fmt
+  
+  -- JVM 和动态语言 (JVM & Dynamic Languages)
+  java = false, -- Java: jdtls + google-java-format
+  ruby = false, -- Ruby: solargraph + rubocop
+  
+  -- 科学计算 (Scientific Computing)
+  julia = false, -- Julia: julia-lsp + JuliaFormatter
+  
+  -- Web 开发 (Web Development)
+  typescript = false, -- TypeScript: tsserver + prettier
+  javascript = false, -- JavaScript: tsserver + prettier
+  
+  -- Shell 脚本 (Shell Scripting)
+  bash = false, -- Bash: bash-language-server + shfmt
+  fish = false, -- Fish: fish-lsp
+  zsh = false, -- Zsh: 使用 bash-language-server
+  nushell = false, -- Nushell: nushell LSP
 }
 
 -- 💡 检查语言是否启用 (Check if language is enabled)

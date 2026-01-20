@@ -134,6 +134,114 @@ return {
   },
 
   -- =========================================================
+  -- Ruby 语言支持 (Ruby Language Support)
+  -- =========================================================
+  {
+    "neovim/nvim-lspconfig",
+    enabled = function()
+      return lang_config.is_enabled("ruby")
+    end,
+    opts = function(_, opts)
+      opts.servers = opts.servers or {}
+      opts.servers.solargraph = {
+        -- 💡 Ruby LSP 配置 (Ruby LSP configuration)
+        settings = {
+          solargraph = {
+            diagnostics = true,
+            formatting = true,
+          },
+        },
+      }
+      return opts
+    end,
+  },
+
+  -- =========================================================
+  -- Zig 语言支持 (Zig Language Support)
+  -- =========================================================
+  {
+    "ziglang/zig.vim",
+    enabled = function()
+      return lang_config.is_enabled("zig")
+    end,
+    ft = { "zig" },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    enabled = function()
+      return lang_config.is_enabled("zig")
+    end,
+    opts = function(_, opts)
+      opts.servers = opts.servers or {}
+      opts.servers.zls = {
+        -- 💡 Zig LSP 配置 (Zig LSP configuration)
+        settings = {
+          zls = {
+            enable_autofix = true,
+            enable_snippets = true,
+            warn_style = true,
+          },
+        },
+      }
+      return opts
+    end,
+  },
+
+  -- =========================================================
+  -- Julia 语言支持 (Julia Language Support)
+  -- =========================================================
+  {
+    "JuliaEditorSupport/julia-vim",
+    enabled = function()
+      return lang_config.is_enabled("julia")
+    end,
+    ft = { "julia" },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    enabled = function()
+      return lang_config.is_enabled("julia")
+    end,
+    opts = function(_, opts)
+      opts.servers = opts.servers or {}
+      opts.servers.julials = {
+        -- 💡 Julia LSP 配置 (Julia LSP configuration)
+        settings = {
+          julia = {
+            format = {
+              indent = 4,
+            },
+          },
+        },
+      }
+      return opts
+    end,
+  },
+
+  -- =========================================================
+  -- Fish Shell 支持 (Fish Shell Support)
+  -- =========================================================
+  {
+    "dag/vim-fish",
+    enabled = function()
+      return lang_config.is_enabled("fish")
+    end,
+    ft = { "fish" },
+  },
+
+  -- =========================================================
+  -- Nushell 支持 (Nushell Support)
+  -- =========================================================
+  {
+    "LhKipp/nvim-nu",
+    enabled = function()
+      return lang_config.is_enabled("nushell")
+    end,
+    ft = { "nu" },
+    build = ":TSInstall nu",
+  },
+
+  -- =========================================================
   -- Tree-sitter 多语言语法高亮 (Tree-sitter Multi-Language Syntax Highlighting)
   -- =========================================================
   {
@@ -156,8 +264,28 @@ return {
         table.insert(parsers, "java")
       end
       
-      if lang_config.is_enabled("bash") then
+      if lang_config.is_enabled("bash") or lang_config.is_enabled("zsh") then
         table.insert(parsers, "bash")
+      end
+      
+      if lang_config.is_enabled("ruby") then
+        table.insert(parsers, "ruby")
+      end
+      
+      if lang_config.is_enabled("zig") then
+        table.insert(parsers, "zig")
+      end
+      
+      if lang_config.is_enabled("julia") then
+        table.insert(parsers, "julia")
+      end
+      
+      if lang_config.is_enabled("fish") then
+        table.insert(parsers, "fish")
+      end
+      
+      if lang_config.is_enabled("nushell") then
+        table.insert(parsers, "nu")
       end
       
       -- 通用 parsers (Universal parsers)
@@ -202,11 +330,30 @@ return {
         })
       end
       
-      if lang_config.is_enabled("bash") then
+      if lang_config.is_enabled("bash") or lang_config.is_enabled("zsh") then
         vim.list_extend(opts.ensure_installed, {
           "bash-language-server", -- Bash LSP
           "shfmt",                -- Shell formatter
           "shellcheck",           -- Shell linter
+        })
+      end
+      
+      if lang_config.is_enabled("ruby") then
+        vim.list_extend(opts.ensure_installed, {
+          "solargraph",  -- Ruby LSP
+          "rubocop",     -- Ruby linter/formatter
+        })
+      end
+      
+      if lang_config.is_enabled("zig") then
+        vim.list_extend(opts.ensure_installed, {
+          "zls",  -- Zig LSP
+        })
+      end
+      
+      if lang_config.is_enabled("julia") then
+        vim.list_extend(opts.ensure_installed, {
+          "julia-lsp",  -- Julia LSP
         })
       end
       
@@ -239,9 +386,26 @@ return {
         opts.formatters_by_ft.java = { "google-java-format" }
       end
       
-      if lang_config.is_enabled("bash") then
+      if lang_config.is_enabled("bash") or lang_config.is_enabled("zsh") then
         opts.formatters_by_ft.sh = { "shfmt" }
         opts.formatters_by_ft.bash = { "shfmt" }
+        opts.formatters_by_ft.zsh = { "shfmt" }
+      end
+      
+      if lang_config.is_enabled("ruby") then
+        opts.formatters_by_ft.ruby = { "rubocop" }
+      end
+      
+      if lang_config.is_enabled("zig") then
+        opts.formatters_by_ft.zig = { "zigfmt" }
+      end
+      
+      if lang_config.is_enabled("julia") then
+        opts.formatters_by_ft.julia = { "juliaformatter" }
+      end
+      
+      if lang_config.is_enabled("fish") then
+        opts.formatters_by_ft.fish = { "fish_indent" }
       end
       
       return opts
