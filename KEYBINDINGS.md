@@ -87,6 +87,45 @@
 
 ---
 
+## 📄 Markdown 编辑 (Markdown Editing)
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<leader>mp` | 切换预览 | Toggle Markdown preview |
+| `<leader>mg` | 终端预览 | Glow terminal preview |
+| `<leader>mt` | 表格模式 | Toggle table mode |
+| `<leader>mT` | 生成目录 | Generate TOC |
+
+---
+
+## 🎨 主题切换 (Theme Switching)
+
+| 命令 | 功能 | Description |
+|------|------|-------------|
+| `:colorscheme catppuccin` | 切换到 Catppuccin 主题 | Switch to Catppuccin theme |
+| `:colorscheme tokyonight` | 切换到 Tokyonight 主题 | Switch to Tokyonight theme |
+| `:set background=dark` | 切换到深色模式 | Switch to dark mode |
+| `:set background=light` | 切换到浅色模式 | Switch to light mode |
+
+### Catppuccin 风格切换 (Catppuccin Flavors)
+
+在配置文件中修改 `lua/plugins/colorscheme.lua` 的 `flavour` 选项：
+
+```lua
+flavour = "mocha",  -- mocha (深夜), frappe (柔和深色), macchiato (中深色), latte (浅色)
+```
+
+或使用命令临时切换：
+
+```vim
+:Catppuccin mocha      " 深夜风格
+:Catppuccin frappe     " 柔和深色
+:Catppuccin macchiato  " 中深色
+:Catppuccin latte      " 浅色风格
+```
+
+---
+
 ## 🐛 调试 (Debugging)
 
 | 快捷键 | 功能 | Description |
