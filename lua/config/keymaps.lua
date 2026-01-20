@@ -24,6 +24,39 @@ local opts = { noremap = true, silent = true }
 -- 💡 保存文件 (Save file)
 keymap.set("n", "<C-s>", "<cmd>w<cr>", vim.tbl_extend("force", opts, { desc = "Save file" }))
 keymap.set("i", "<C-s>", "<cmd>w<cr><esc>", vim.tbl_extend("force", opts, { desc = "Save file and exit insert" }))
+keymap.set("v", "<C-s>", "<cmd>w<cr>", vim.tbl_extend("force", opts, { desc = "Save file" }))
+
+-- 💡 另存为 (Save as)
+keymap.set("n", "<leader>fs", function()
+  local new_name = vim.fn.input("Save as: ", vim.fn.expand("%"), "file")
+  if new_name ~= "" and new_name ~= vim.fn.expand("%") then
+    vim.cmd("saveas " .. new_name)
+  end
+end, vim.tbl_extend("force", opts, { desc = "Save As" }))
+
+-- 💡 全选 (Select all)
+keymap.set("n", "<C-a>", "ggVG", vim.tbl_extend("force", opts, { desc = "Select all" }))
+
+-- 💡 复制粘贴撤销 (Copy, Paste, Undo, Redo)
+-- 使用系统剪贴板 (Use system clipboard)
+keymap.set({ "n", "v" }, "<C-c>", '"+y', vim.tbl_extend("force", opts, { desc = "Copy to clipboard" }))
+keymap.set({ "n", "v" }, "<C-x>", '"+d', vim.tbl_extend("force", opts, { desc = "Cut to clipboard" }))
+keymap.set({ "n", "i" }, "<C-v>", '"+p', vim.tbl_extend("force", opts, { desc = "Paste from clipboard" }))
+keymap.set("v", "<C-v>", '"+p', vim.tbl_extend("force", opts, { desc = "Paste from clipboard" }))
+
+-- 💡 撤销和重做 (Undo and Redo)
+keymap.set("n", "<C-z>", "u", vim.tbl_extend("force", opts, { desc = "Undo" }))
+keymap.set("i", "<C-z>", "<C-o>u", vim.tbl_extend("force", opts, { desc = "Undo" }))
+keymap.set("n", "<C-y>", "<C-r>", vim.tbl_extend("force", opts, { desc = "Redo" }))
+keymap.set("i", "<C-y>", "<C-o><C-r>", vim.tbl_extend("force", opts, { desc = "Redo" }))
+
+-- 💡 Visual 模式下保持选中 (Keep selection after indent)
+keymap.set("v", "<", "<gv", vim.tbl_extend("force", opts, { desc = "Indent left" }))
+keymap.set("v", ">", ">gv", vim.tbl_extend("force", opts, { desc = "Indent right" }))
+
+-- 💡 移动选中的行 (Move selected lines)
+keymap.set("v", "J", ":m '>+1<CR>gv=gv", vim.tbl_extend("force", opts, { desc = "Move line down" }))
+keymap.set("v", "K", ":m '<-2<CR>gv=gv", vim.tbl_extend("force", opts, { desc = "Move line up" }))
 
 -- 💡 更好的上下移动 (Better up/down movement)
 keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -39,6 +72,8 @@ keymap.set("n", "<C-l>", "<C-w>l", vim.tbl_extend("force", opts, { desc = "Go to
 keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", vim.tbl_extend("force", opts, { desc = "Prev buffer" }))
 keymap.set("n", "<S-l>", "<cmd>bnext<cr>", vim.tbl_extend("force", opts, { desc = "Next buffer" }))
 keymap.set("n", "<leader>bd", "<cmd>bdelete<cr>", vim.tbl_extend("force", opts, { desc = "Delete buffer" }))
+keymap.set("n", "<leader>bD", "<cmd>%bd|e#<cr>", vim.tbl_extend("force", opts, { desc = "Delete all buffers except current" }))
+
 
 -- ---------------------------------------------------------
 -- Python 开发快捷键 (Python Development Keymaps)
