@@ -11,9 +11,8 @@ return {
   -- 文件预览功能 (File Preview Functionality)
   -- ---------------------------------------------------------
   {
-    "file-preview",
-    dir = vim.fn.stdpath("config") .. "/lua/plugins/file-preview",
-    event = "VeryLazy",
+    "file-preview-setup",
+    lazy = false,
     config = function()
       -- 💡 文件预览核心函数 (Core file preview function)
       local M = {}
