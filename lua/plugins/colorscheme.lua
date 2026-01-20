@@ -193,12 +193,14 @@ return {
     "neanias/everforest-nvim",
     lazy = false,
     priority = 1000,
-    opts = {
-      background = "hard", -- hard, medium, soft
-      italics = true,
-      disable_italic_comments = false,
-      transparent_background_level = 0,
-    },
+    config = function()
+      require("everforest").setup({
+        background = "hard", -- hard, medium, soft
+        italics = true,
+        disable_italic_comments = false,
+        transparent_background_level = 0,
+      })
+    end,
   },
 
   -- =========================================================
