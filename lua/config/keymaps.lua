@@ -138,6 +138,17 @@ keymap.set("n", "<leader>lt", "<cmd>VimtexTocOpen<cr>", vim.tbl_extend("force", 
 keymap.set("n", "<leader>ls", "<cmd>VimtexStop<cr>", vim.tbl_extend("force", opts, { desc = "LaTeX Stop" }))
 
 -- ---------------------------------------------------------
+-- PDF 查看快捷键 (PDF Viewing Keymaps)
+-- ---------------------------------------------------------
+-- 💡 注意: PDF 查看功能由 PDFview 插件提供
+-- Note: PDF viewing functionality provided by PDFview plugin
+-- 插件配置文件: lua/plugins/pdfview.lua
+
+-- 💡 打开 PDF (<leader>po) - 在 pdfview.lua 中定义
+-- 💡 下一页 (<leader>pn, <leader>jj) - 在 pdfview.lua 中定义  
+-- 💡 上一页 (<leader>pp, <leader>kk) - 在 pdfview.lua 中定义
+
+-- ---------------------------------------------------------
 -- LSP 快捷键增强 (LSP Keymap Enhancement)
 -- ---------------------------------------------------------
 -- 💡 格式化代码 (Format code) - 已在 formatting.lua 中定义
@@ -180,6 +191,17 @@ keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr>", vim.tbl_extend("force", opts, { 
 
 -- 💡 快速退出 (Quick quit)
 keymap.set("n", "<leader>qq", "<cmd>qa<cr>", vim.tbl_extend("force", opts, { desc = "Quit all" }))
+
+-- ---------------------------------------------------------
+-- Yazi 文件管理器 (Yazi File Manager)
+-- ---------------------------------------------------------
+-- 💡 注意: Yazi 文件管理器由 yazi.nvim 插件提供
+-- Note: Yazi file manager functionality provided by yazi.nvim plugin
+-- 插件配置文件: lua/plugins/yazi.lua
+
+-- 💡 打开 Yazi (<leader>fy) - 在 yazi.lua 中定义
+-- 💡 在工作目录打开 (<leader>fY) - 在 yazi.lua 中定义
+-- 💡 恢复会话 (<leader>yr) - 在 yazi.lua 中定义
 
 -- ---------------------------------------------------------
 -- 文件预览功能 (File Preview Functionality)

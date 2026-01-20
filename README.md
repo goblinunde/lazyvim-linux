@@ -52,6 +52,20 @@
 - **智能列表**: bullets.vim (复选框管理) | bullets.vim (checkbox management)
 - **智能软换行**: 自动在单词边界换行，保持缩进 | Smart soft wrap at word boundaries with indent preservation
 
+### 📄 PDF 查看 (PDF Viewing)
+
+- **Neovim 内查看**: PDFview.nvim (在 Neovim 内查看 PDF 文本) | PDFview.nvim (view PDF text in Neovim)
+- **键盘导航**: 快捷键翻页 | Keyboard navigation for pages
+- **自动打开**: 自动识别 PDF 文件 | Auto-open PDF files
+- **文本提取**: pdftotext 提取 PDF 内容 | Extract PDF content with pdftotext
+
+### 📁 文件管理 (File Management)
+
+- **现代文件管理器**: Yazi.nvim (在 Neovim 内使用 Yazi 终端文件管理器) | Yazi.nvim (use Yazi terminal file manager in Neovim)
+- **浮动窗口**: 美观的浮动窗口界面 | Beautiful floating window interface
+- **快捷操作**: 分割、标签、quickfix 等快捷操作 | Quick operations like splits, tabs, quickfix
+- **集成搜索**: 集成 Telescope 和 grug-far | Integrated with Telescope and grug-far
+
 ### 🛠️ 其他功能 (Other Features)
 
 - **文件预览**: PDF、图片、视频等格式一键预览 | File preview for PDF, images, videos
@@ -99,7 +113,7 @@ sudo dnf install texlive-scheme-full latexmk zathura zathura-pdf-mupdf
 
 ```bash
 # Fedora 43
-sudo dnf install ripgrep fd-find
+sudo dnf install ripgrep fd-find poppler-utils yazi  # yazi 是现代终端文件管理器
 ```
 
 ---
@@ -148,6 +162,9 @@ On first launch, LazyVim will automatically install all plugins and LSP servers.
 │   │   ├── python.lua          # Python 开发
 │   │   ├── rust.lua            # Rust 开发
 │   │   ├── latex.lua           # LaTeX 写作
+│   │   ├── markdown.lua        # Markdown 编辑
+│   │   ├── pdfview.lua         # PDF 查看
+│   │   ├── yazi.lua            # Yazi 文件管理
 │   │   ├── treesitter.lua      # Tree-sitter
 │   │   ├── formatting.lua      # 格式化
 │   │   └── dap.lua             # 调试器
@@ -205,6 +222,16 @@ On first launch, LazyVim will automatically install all plugins and LSP servers.
 | `<leader>mt` | 表格模式 | Table mode |
 | `<leader>mT` | 生成目录 | Generate TOC |
 
+### 📖 PDF 查看 (PDF Viewing)
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<leader>po` | 打开 PDF | Open PDF with Telescope |
+| `<leader>pn` | 下一页 | Next page |
+| `<leader>pp` | 上一页 | Previous page |
+| `<leader>jj` | 下一页 (快速) | Next page (fast) |
+| `<leader>kk` | 上一页 (快速) | Previous page (fast) |
+
 ### 🎨 主题切换 (Theme Switching)
 
 **命令模式切换** (Command mode):
@@ -250,6 +277,25 @@ On first launch, LazyVim will automatically install all plugins and LSP servers.
 | `<leader>bD` | 强制删除缓冲区 | Force delete buffer |
 | `<S-h>` | 上一个缓冲区 | Previous buffer |
 | `<S-l>` | 下一个缓冲区 | Next buffer |
+
+### 📁 Yazi 文件管理器 (Yazi File Manager)
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<leader>fy` | 打开 Yazi | Open Yazi at current file |
+| `<leader>fY` | 在工作目录打开 | Open Yazi in working directory |
+| `<leader>yr` | 恢复会话 | Resume last Yazi session |
+
+**Yazi 内部快捷键** (Inside Yazi):
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<F1>` | 显示帮助 | Show help |
+| `<C-v>` | 垂直分割打开 | Open in vertical split |
+| `<C-x>` | 水平分割打开 | Open in horizontal split |
+| `<C-t>` | 新标签打开 | Open in new tab |
+| `<C-s>` | Telescope 搜索 | Grep in directory |
+| `<C-q>` | 发送到 quickfix | Send to quickfix list |
 
 ### 👁️ 文件预览 (File Preview)
 

@@ -224,6 +224,16 @@ autocmd("BufWritePost", {
 })
 
 -- ---------------------------------------------------------
+-- PDF 查看专用自动命令 (PDF Viewing-specific Autocmds)
+-- ---------------------------------------------------------
+
+-- 💡 PDF 文件自动打开 (Auto open PDF files with PDFview)
+-- 注意: PDF 自动命令在 lua/plugins/pdfview.lua 中定义
+-- Note: PDF autocmds are defined in lua/plugins/pdfview.lua
+-- 功能: 打开 *.pdf 文件时自动使用 PDFview 插件查看
+-- Feature: Automatically use PDFview plugin when opening *.pdf files
+
+-- ---------------------------------------------------------
 -- UI 增强 (UI Enhancements)
 -- ---------------------------------------------------------
 
