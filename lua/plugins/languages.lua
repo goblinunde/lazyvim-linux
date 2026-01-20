@@ -92,7 +92,7 @@ return {
       "neovim/nvim-lspconfig",
       "mfussenegger/nvim-dap",
       {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         opts = {
           registries = {
             "github:nvim-java/mason-registry",
@@ -300,7 +300,7 @@ return {
   -- Mason 自动安装工具 (Mason Auto-Install Tools)
   -- =========================================================
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
       

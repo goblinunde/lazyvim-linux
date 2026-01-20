@@ -2,127 +2,56 @@
 -- 主题配置 (Colorscheme Configuration)
 -- =========================================================
 -- 功能说明 (Description):
---   基于 resource.css 的深青色主题配置
---   Implements resource.css inspired deep teal theme
+--   丰富的主题选择，涵盖多种风格
+--   Rich theme selection covering various styles
 -- =========================================================
 
 return {
-  -- ---------------------------------------------------------
-  -- 主题插件: Catppuccin (优雅的柔和色调主题)
-  -- Theme: Catppuccin - Elegant pastel theme
-  -- ---------------------------------------------------------
+  -- =========================================================
+  -- 主题 1: Catppuccin (优雅柔和色调)
+  -- =========================================================
   {
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
     opts = {
-      -- 风格选择: mocha (深色), latte (浅色)
-      -- Flavour: mocha for dark mode, latte for light mode
       flavour = "mocha", -- latte, frappe, macchiato, mocha
-      
-      -- 背景样式 (Background styles)
       background = {
         light = "latte",
         dark = "mocha",
       },
-      
-      -- 透明背景 (Transparent background)
       transparent_background = false,
-      
-      -- 终端颜色 (Terminal colors)
       term_colors = true,
-      
-      -- 自定义高亮覆盖 (Custom highlight overrides)
-      -- 将默认配色修改为 resource.css 的深青色系
-      custom_highlights = function(colors)
-        local c = require("utils.colors")
-        local theme = c.get_theme_colors(vim.o.background == "dark")
-        
-        return {
-          -- 💡 General UI elements: 通用 UI 元素
-          Normal = { bg = theme.bg, fg = theme.fg },
-          NormalFloat = { bg = theme.bg_mute, fg = theme.fg },
-          FloatBorder = { fg = c.colors.primary, bg = theme.bg_mute },
-          
-          -- 💡 Cursor and search: 光标与搜索
-          CursorLine = { bg = theme.bg_soft },
-          CursorLineNr = { fg = c.colors.primary, bold = true },
-          Search = { bg = c.colors.primary_mute, fg = theme.fg },
-          IncSearch = { bg = c.colors.primary, fg = theme.bg },
-          
-          -- 💡 Code blocks: 代码块样式
-          -- 参考 resource.css 的代码块背景
-          Pmenu = { bg = theme.code_bg, fg = theme.fg },
-          PmenuSel = { bg = c.colors.primary, fg = theme.bg },
-          
-          -- 💡 Diagnostic colors: 诊断信息配色
-          DiagnosticError = { fg = c.colors.semantic.error },
-          DiagnosticWarn = { fg = c.colors.semantic.warning },
-          DiagnosticInfo = { fg = c.colors.semantic.info },
-          DiagnosticHint = { fg = c.colors.semantic.hint },
-          
-          -- 💡 Git signs: Git 状态标识
-          GitSignsAdd = { fg = c.colors.semantic.success },
-          GitSignsChange = { fg = c.colors.semantic.warning },
-          GitSignsDelete = { fg = c.colors.semantic.error },
-          
-          -- 💡 Statusline: 状态栏 (深青色主题)
-          StatusLine = { bg = c.colors.primary, fg = theme.bg },
-          StatusLineNC = { bg = theme.bg_mute, fg = theme.fg_dim },
-          
-          -- 💡 Tabs and buffers: 标签页与缓冲区
-          TabLine = { bg = theme.bg_mute, fg = theme.fg_dim },
-          TabLineSel = { bg = c.colors.primary, fg = theme.bg },
-          TabLineFill = { bg = theme.bg },
-        }
-      end,
-      
-      -- 集成插件配色 (Plugin integrations)
       integrations = {
-        cmp = true,                    -- nvim-cmp 补全菜单
-        gitsigns = true,               -- Git 标识
-        nvimtree = true,               -- 文件树
-        treesitter = true,             -- Tree-sitter 语法高亮
-        notify = true,                 -- 通知插件
-        mason = true,                  -- Mason 包管理器
+        cmp = true,
+        gitsigns = true,
+        nvimtree = true,
+        treesitter = true,
+        notify = true,
+        mason = true,
+        telescope = { enabled = true },
+        which_key = true,
         native_lsp = {
           enabled = true,
           virtual_text = {
             errors = { "italic" },
             hints = { "italic" },
             warnings = { "italic" },
-            information = { "italic" },
-          },
-          underlines = {
-            errors = { "underline" },
-            hints = { "underline" },
-            warnings = { "underline" },
-            information = { "underline" },
           },
         },
-        telescope = {
-          enabled = true,
-        },
-        which_key = true,              -- 快捷键提示
       },
     },
-    config = function(_, opts)
-      require("catppuccin").setup(opts)
-      -- 💡 启用主题 (Enable the theme)
-      vim.cmd.colorscheme("catppuccin")
-    end,
   },
 
-  -- ---------------------------------------------------------
-  -- 备选主题: Tokyonight (LazyVim 默认主题)
-  -- Alternative: Tokyonight - LazyVim default
-  -- ---------------------------------------------------------
+  -- =========================================================
+  -- 主题 2: Tokyonight (东京夜晚主题)
+  -- =========================================================
   {
     "folke/tokyonight.nvim",
-    lazy = true, -- 设为备用，不自动加载
-    priority = 900,
+    lazy = false,
+    priority = 1000,
     opts = {
-      style = "night", -- night, storm, day, moon
+      style = "night", -- storm, moon, night, day
       transparent = false,
       styles = {
         comments = { italic = true },
@@ -133,13 +62,186 @@ return {
     },
   },
 
-  -- ---------------------------------------------------------
-  -- LazyVim 配色方案配置
-  -- Configure LazyVim to use our theme
-  -- ---------------------------------------------------------
+  -- =========================================================
+  -- 主题 3: Gruvbox (复古暖色调)
+  -- =========================================================
+  {
+    "ellisonleao/gruvbox.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      contrast = "hard", -- "hard", "medium", "soft"
+      transparent_mode = false,
+      italic = {
+        strings = false,
+        comments = true,
+        operators = false,
+        folds = true,
+      },
+    },
+  },
+
+  -- =========================================================
+  -- 主题 4: Kanagawa (日式水墨风格)
+  -- =========================================================
+  {
+    "rebelot/kanagawa.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      compile = false,
+      undercurl = true,
+      commentStyle = { italic = true },
+      keywordStyle = { italic = true },
+      statementStyle = { bold = true },
+      transparent = false,
+      theme = "wave", -- wave, dragon, lotus
+    },
+  },
+
+  -- =========================================================
+  -- 主题 5: Rose Pine (玫瑰松木主题)
+  -- =========================================================
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      variant = "moon", -- auto, main, moon, dawn
+      dark_variant = "moon",
+      disable_background = false,
+      disable_float_background = false,
+      disable_italics = false,
+    },
+  },
+
+  -- =========================================================
+  -- 主题 6: Nightfox (夜狐主题家族)
+  -- =========================================================
+  {
+    "EdenEast/nightfox.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      options = {
+        transparent = false,
+        terminal_colors = true,
+        styles = {
+          comments = "italic",
+          keywords = "bold",
+          types = "italic,bold",
+        },
+      },
+    },
+  },
+
+  -- =========================================================
+  -- 主题 7: Dracula (德古拉主题)
+  -- =========================================================
+  {
+    "Mofiqul/dracula.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent_bg = false,
+      italic_comment = true,
+      show_end_of_buffer = true,
+    },
+  },
+
+  -- =========================================================
+  -- 主题 8: Nord (北欧冷色调)
+  -- =========================================================
+  {
+    "shaunsingh/nord.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.g.nord_contrast = true
+      vim.g.nord_borders = true
+      vim.g.nord_disable_background = false
+      vim.g.nord_italic = true
+      vim.g.nord_bold = true
+    end,
+  },
+
+  -- =========================================================
+  -- 主题 9: Onedark (Atom 经典主题)
+  -- =========================================================
+  {
+    "navarasu/onedark.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      style = "dark", -- dark, darker, cool, deep, warm, warmer
+      transparent = false,
+      code_style = {
+        comments = "italic",
+        keywords = "bold",
+        functions = "none",
+        strings = "none",
+        variables = "none",
+      },
+    },
+  },
+
+  -- =========================================================
+  -- 主题 10: Everforest (森林主题)
+  -- =========================================================
+  {
+    "neanias/everforest-nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      background = "hard", -- hard, medium, soft
+      italics = true,
+      disable_italic_comments = false,
+      transparent_background_level = 0,
+    },
+  },
+
+  -- =========================================================
+  -- 主题 11: Solarized (经典科学配色)
+  -- =========================================================
+  {
+    "maxmx03/solarized.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent = false,
+      styles = {
+        comments = { italic = true },
+        functions = { bold = true },
+        variables = {},
+      },
+    },
+  },
+
+  -- =========================================================
+  -- 主题 12: Monokai Pro (Sublime Text 经典)
+  -- =========================================================
+  {
+    "loctvl842/monokai-pro.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      transparent_background = false,
+      terminal_colors = true,
+      filter = "pro", -- classic, octagon, pro, machine, ristretto, spectrum
+    },
+  },
+
+  -- =========================================================
+  -- LazyVim 主题选择器
+  -- =========================================================
   {
     "LazyVim/LazyVim",
     opts = {
+      -- 💡 默认主题：可以在这里更改
+      -- Default theme: change here to switch themes
+      -- 可选: catppuccin, tokyonight, gruvbox, kanagawa, rose-pine, 
+      --       nightfox, dracula, nord, onedark, everforest, solarized, monokai-pro
       colorscheme = "catppuccin",
     },
   },
