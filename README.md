@@ -42,6 +42,14 @@
 - **片段**: Physics、PDE 数学公式片段 | Physics, PDE mathematical formula snippets
 - **包支持**: physics, siunitx, cleveref | Package support for physics, siunitx, cleveref
 
+### 📄 Markdown 编辑与预览 (Markdown Editing & Preview)
+
+- **浏览器预览**: markdown-preview.nvim (实时预览) | markdown-preview.nvim (live preview)
+- **终端预览**: Glow (轻量级预览) | Glow (lightweight preview)
+- **表格编辑**: vim-table-mode (自动格式化) | vim-table-mode (auto-formatting)
+- **目录生成**: vim-markdown-toc (自动 TOC) | vim-markdown-toc (auto TOC)
+- **智能列表**: bullets.vim (复选框管理) | bullets.vim (checkbox management)
+
 ### 🛠️ 其他功能 (Other Features)
 
 - **Tree-sitter**: 增强语法高亮和代码理解 | Enhanced syntax highlighting
@@ -184,7 +192,96 @@ On first launch, LazyVim will automatically install all plugins and LSP servers.
 | `<leader>lc` | 清理辅助文件 | Clean auxiliary files |
 | `<leader>lt` | 打开目录 | Open TOC |
 
-### 调试 (Debugging)
+### 📄 Markdown
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<leader>mp` | 浏览器预览 | Browser preview |
+| `<leader>mg` | 终端预览 (Glow) | Terminal preview (Glow) |
+| `<leader>mt` | 表格模式 | Table mode |
+| `<leader>mT` | 生成目录 | Generate TOC |
+
+### 🎨 主题切换 (Theme Switching)
+
+**命令模式切换** (Command mode):
+
+```vim
+:colorscheme catppuccin     # Catppuccin 主题
+:colorscheme tokyonight     # Tokyonight 主题
+:Catppuccin mocha           # 深夜风格
+:Catppuccin frappe          # 柔和深色
+:Catppuccin macchiato       # 中深色
+:Catppuccin latte           # 浅色风格
+:set background=dark        # 深色模式
+:set background=light       # 浅色模式
+```
+
+**永久修改**: 编辑 `lua/plugins/colorscheme.lua` 文件
+
+### 🔍 查找与导航 (Search & Navigation)
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<leader>ff` | 查找文件 | Find files |
+| `<leader>fg` | 全局搜索 | Global search (grep) |
+| `<leader>fb` | 查找缓冲区 | Find buffers |
+| `<leader>fr` | 最近文件 | Recent files |
+| `<leader>ss` | 符号搜索 | Symbol search |
+| `<leader>/` | 当前缓冲区搜索 | Search in buffer |
+| `gd` | 转到定义 | Go to definition |
+| `gr` | 查找引用 | Find references |
+| `<C-o>` | 跳转历史向后 | Jump backward |
+| `<C-i>` | 跳转历史向前 | Jump forward |
+
+### 📂 文件操作 (File Operations)  
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<leader>e` | 文件树 | File explorer |
+| `<leader>fe` | 浮动文件树 | Float file explorer |
+| `<C-s>` | 保存文件 | Save file |
+| `<leader>fs` | 另存为 | Save as |
+| `<leader>fn` | 新文件 | New file |
+| `<leader>bd` | 删除缓冲区 | Delete buffer |
+| `<leader>bD` | 强制删除缓冲区 | Force delete buffer |
+| `<S-h>` | 上一个缓冲区 | Previous buffer |
+| `<S-l>` | 下一个缓冲区 | Next buffer |
+
+### 💻 代码编辑 (Code Editing)
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<leader>ca` | 代码操作 | Code action |
+| `<leader>cr` | 重命名 | Rename symbol |
+| `<leader>cf` | 格式化 | Format code |
+| `K` | 悬浮文档 | Hover documentation |
+| `gD` | 转到声明 | Go to declaration |
+| `gi` | 转到实现 | Go to implementation |
+| `<C-k>` | 签名帮助 | Signature help |
+| `]d` | 下一个诊断 | Next diagnostic |
+| `[d` | 上一个诊断 | Previous diagnostic |
+| `<leader>cd` | 行诊断 | Line diagnostics |
+| `gcc` | 注释/取消注释 | Toggle comment |
+| `gc` | 注释（Visual 模式） | Comment (Visual) |
+
+### 🪟 窗口管理 (Window Management)
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<C-h>` | 移到左窗口 | Go to left window |
+| `<C-j>` | 移到下窗口 | Go to lower window |
+| `<C-k>` | 移到上窗口 | Go to upper window |
+| `<C-l>` | 移到右窗口 | Go to right window |
+| `<leader>ww` | 切换窗口 | Switch window |
+| `<leader>wd` | 删除窗口 | Delete window |
+| `<leader>w-` | 水平分割 | Horizontal split |
+| `<leader>w|` | 垂直分割 | Vertical split |
+| `<C-Up>` | 增加高度 | Increase height |
+| `<C-Down>` | 减少高度 | Decrease height |
+| `<C-Left>` | 减少宽度 | Decrease width |
+| `<C-Right>` | 增加宽度 | Increase width |
+
+### 🐛 调试 (Debugging)
 
 | 快捷键 | 功能 | Description |
 |--------|------|-------------|
@@ -205,6 +302,190 @@ This configuration uses a deep teal academic color scheme from resource.css desi
 - **Dark Background**: `#1A3038` (深青黑 | Deep Teal-Black)  
 - **Light Background**: `#E6EDEF` (月白青 | Moon-White Teal)
 - **Foreground**: `#E6EDEF` / `#2F545D` (根据主题 | Theme-dependent)
+
+---
+
+## 🔧 常用命令 (Common Commands)
+
+### 插件管理 (Plugin Management)
+
+| 命令 | 功能 | Description |
+|------|------|-------------|
+| `:Lazy` | 打开插件管理器 | Open plugin manager |
+| `:Lazy sync` | 同步所有插件 | Sync all plugins |
+| `:Lazy update` | 更新插件 | Update plugins |
+| `:Lazy clean` | 清理未使用的插件 | Clean unused plugins |
+| `:Lazy restore` | 恢复插件快照 | Restore plugin snapshot |
+| `:Lazy profile` | 查看插件加载性能 | View plugin loading performance |
+
+### LSP 命令 (LSP Commands)
+
+| 命令 | 功能 | Description |
+|------|------|-------------|
+| `:LspInfo` | 查看 LSP 信息 | View LSP information |
+| `:LspRestart` | 重启 LSP 服务器 | Restart LSP server |
+| `:Mason` | 打开 Mason 管理器 | Open Mason manager |
+| `:MasonUpdate` | 更新 Mason 工具 | Update Mason tools |
+| `:MasonInstall <tool>` | 安装工具 | Install tool |
+| `:MasonUninstall <tool>` | 卸载工具 | Uninstall tool |
+
+### 格式化与诊断 (Formatting & Diagnostics)
+
+| 命令 | 功能 | Description |
+|------|------|-------------|
+| `:Format` | 格式化代码 | Format code |
+| `:FormatToggle` | 切换自动格式化 | Toggle auto-format |
+| `:Trouble` | 打开问题列表 | Open trouble list (if installed) |
+| `:checkhealth` | 检查健康状态 | Check health status |
+
+### Git 命令 (Git Commands - 需要 lazygit)
+
+| 命令 | 功能 | Description |
+|------|------|-------------|
+| `<leader>gg` | 打开 LazyGit | Open LazyGit |
+| `<leader>gb` | Git blame | Git blame |
+| `<leader>gf` | Git 浮动终端 | Git float terminal |
+
+### 终端 (Terminal)
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<C-/>` | 切换浮动终端 | Toggle float terminal |
+| `<leader>ft` | 浮动终端 | Float terminal |
+| `<leader>fT` | 全屏终端 | Fullscreen terminal |
+
+---
+
+## ⚙️ 自定义配置 (Custom Configuration)
+
+### 修改主题风格
+
+编辑 `lua/plugins/colorscheme.lua`:
+
+```lua
+-- 修改 Catppuccin 风格
+{
+  "catppuccin/nvim",
+  opts = {
+    flavour = "mocha",  -- 可选: mocha, frappe, macchiato, latte
+    transparent_background = false,  -- true 启用透明背景
+    -- 自定义颜色
+    custom_highlights = function(colors)
+      -- 在这里添加自定义高亮
+    end,
+  },
+}
+```
+
+### 修改 LSP 配置
+
+编辑对应语言的插件文件（`lua/plugins/python.lua`、`lua/plugins/rust.lua` 等）：
+
+```lua
+-- 修改 Python LSP 设置
+{
+  "neovim/nvim-lspconfig",
+  opts = {
+    servers = {
+      basedpyright = {
+        settings = {
+          python = {
+            analysis = {
+              typeCheckingMode = "standard",  -- off, basic, standard, strict
+              autoSearchPaths = true,
+            },
+          },
+        },
+      },
+    },
+  },
+}
+```
+
+### 添加自定义快捷键
+
+编辑 `lua/config/keymaps.lua`:
+
+```lua
+local map = vim.keymap.set
+
+-- 示例：添加快速保存并退出
+map("n", "<leader>wq", ":wq<cr>", { desc = "Save and quit" })
+
+-- 示例：快速切换行号显示
+map("n", "<leader>un", ":set number!<cr>", { desc = "Toggle line numbers" })
+```
+
+### 修改 Neovim 选项
+
+编辑 `lua/config/options.lua`:
+
+```lua
+local opt = vim.opt
+
+-- 示例：修改缩进设置
+opt.tabstop = 4          -- Tab 宽度
+opt.shiftwidth = 4       -- 缩进宽度
+opt.expandtab = true     -- 使用空格代替 Tab
+
+-- 示例：显示设置
+opt.number = true        -- 显示行号
+opt.relativenumber = true -- 显示相对行号
+opt.wrap = false         -- 禁用自动换行
+opt.colorcolumn = "80"   -- 显示列标尺
+```
+
+---
+
+## 📊 故障排查 (Troubleshooting)
+
+### Markdown Preview 无法工作
+
+```bash
+# 进入 Neovim 配置目录
+cd ~/.local/share/nvim/lazy/markdown-preview.nvim
+# 手动安装依赖
+cd app && npx --yes yarn install
+```
+
+或在 Neovim 中：
+
+```vim
+:Lazy build markdown-preview.nvim
+```
+
+### LSP 无法启动
+
+1. 检查 LSP 状态：`:LspInfo`
+2. 检查 Mason 工具：是否已安装：`:Mason`
+3. 重启 LSP：`:LspRestart`
+4. 检查健康状态：`:checkhealth lspconfig`
+
+### 插件加载慢
+
+```vim
+:Lazy profile  # 查看插件加载时间
+```
+
+优化建议：
+
+- 使用 `lazy = true` 延迟加载不常用插件
+- 使用 `event`, `cmd`, `ft` 等条件加载
+- 减少 `ensure_installed` 中的语言解析器
+
+### Python 虚拟环境未检测
+
+```bash
+# 在项目根目录创建虚拟环境
+uv venv
+source .venv/bin/activate
+
+# 或使用 conda
+conda create -n myenv python=3.11
+conda activate myenv
+```
+
+然后在 Neovim 中：`<leader>pv` 选择虚拟环境
 
 ---
 
