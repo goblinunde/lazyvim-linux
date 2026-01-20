@@ -311,16 +311,21 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-      -- 💡 自定义窗口配置 (Custom window configuration)
-      window = {
+      -- 💡 使用新版 API (v3.x) - Use new API (v3.x)
+      preset = "modern", -- classic, modern, helix
+      -- 💡 窗口配置 (Window configuration)
+      win = {
         border = "rounded", -- 圆角边框 (Rounded borders)
-        padding = { 2, 2, 2, 2 },
+        padding = { 1, 2 }, -- top/bottom, left/right
       },
       layout = {
         height = { min = 4, max = 25 },
         width = { min = 20, max = 50 },
         spacing = 3,
+        align = "left",
       },
+      -- 💡 延迟显示时间 (Delay before showing which-key)
+      delay = 500, -- ms
     },
   },
 }
