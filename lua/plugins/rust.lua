@@ -9,6 +9,13 @@
 --   - Result<T, E> 错误处理 (Result<T, E> error handling)
 -- =========================================================
 
+local lang_config = require("config.languages")
+
+-- 💡 检查 Rust 是否启用 (Check if Rust is enabled)
+if not lang_config.is_enabled("rust") then
+  return {}
+end
+
 return {
   -- ---------------------------------------------------------
   -- Rust LSP: rust-analyzer (官方 Rust 语言服务器)

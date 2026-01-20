@@ -9,6 +9,13 @@
 --   - Type Hints 强制 (Type hints enforcement)
 -- =========================================================
 
+local lang_config = require("config.languages")
+
+-- 💡 检查 Python 是否启用 (Check if Python is enabled)
+if not lang_config.is_enabled("python") then
+  return {}
+end
+
 return {
   -- ---------------------------------------------------------
   -- Python LSP: Basedpyright (高性能类型检查)

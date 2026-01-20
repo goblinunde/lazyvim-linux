@@ -99,6 +99,34 @@ keymap.set("n", "<leader>rr", "<cmd>RustRunnables<cr>", vim.tbl_extend("force", 
 keymap.set("n", "<leader>rd", "<cmd>RustDebuggables<cr>", vim.tbl_extend("force", opts, { desc = "Rust Debuggables" }))
 
 -- ---------------------------------------------------------
+-- C/C++ 开发快捷键 (C/C++ Development Keymaps)
+-- ---------------------------------------------------------
+-- 💡 注意: C/C++ 快捷键由 quick-c 插件提供
+-- Note: C/C++ keymaps provided by quick-c plugin
+-- 插件配置文件: lua/plugins/quickc.lua
+
+-- 💡 快速构建 (<leader>cqb) - 在 quickc.lua 中定义
+-- 💡 运行程序 (<leader>cqr) - 在 quickc.lua 中定义
+-- 💡 构建并运行 (<leader>cqR) - 在 quickc.lua 中定义
+-- 💡 调试程序 (<leader>cqD) - 在 quickc.lua 中定义
+-- 💡 Make 目标 (<leader>cqM) - 在 quickc.lua 中定义
+-- 💡 CMake 配置 (<leader>cqc) - 在 quickc.lua 中定义
+
+-- ---------------------------------------------------------
+-- Git 工作流快捷键 (Git Workflow Keymaps)
+-- ---------------------------------------------------------
+-- 💡 注意: Git 快捷键由 git.lua 插件提供
+-- Note: Git keymaps provided by git.lua plugins
+-- 插件配置文件: lua/plugins/git.lua
+
+-- 💡 LazyGit (<leader>gg) - 在 git.lua 中定义
+-- 💡 Git Status (<leader>gs) - 在 git.lua 中定义
+-- 💡 Git Diff (<leader>gd) - 在 git.lua 中定义
+-- 💡 Git Blame (<leader>gb) - 在 git.lua 中定义
+-- 💡 Stage Hunk (<leader>hs) - 在 git.lua 中定义
+-- 💡 Next Hunk (]h) - 在 git.lua 中定义
+
+-- ---------------------------------------------------------
 -- Markdown 编写快捷键 (Markdown Writing Keymaps)
 -- ---------------------------------------------------------
 -- 💡 切换 Markdown 渲染 (Toggle Markdown rendering)

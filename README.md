@@ -34,6 +34,23 @@
 - **调试器**: codelldb (LLDB 调试器) | codelldb (LLDB debugger)
 - **强调**: 内存安全和 Result<T,E> 错误处理 | Emphasizes memory safety and Result<T,E> error handling
 
+### 🔨 C/C++ 开发 (C/C++ Development)
+
+- **构建工具**: Quick-c (一键编译、运行、调试) | Quick-c (one-click build, run, debug)
+- **Make 集成**: 自动发现 Makefile、目标选择器 | Auto-detect Makefile, target selector
+- **CMake 集成**: cmake 配置与构建、目标列表 | cmake configure/build, target list
+- **调试器**: nvim-dap + codelldb (LLDB 调试器) | nvim-dap + codelldb (LLDB debugger)
+- **多文件支持**: Telescope 多选源文件、异步构建 | Telescope multi-select sources, async build
+- **跨平台**: 自动检测编译器 (gcc/clang/cl) | Auto-detect compilers (gcc/clang/cl)
+
+### 🌿 Git 工作流 (Git Workflow)
+
+- **LazyGit**: 现代化 TUI Git 客户端 | Modern TUI Git client
+- **Gitsigns**: Git 变更标记、暂存、预览 | Git change markers, staging, preview
+- **Fugitive**: 经典 Git 命令集成 | Classic Git command integration
+- **Diffview**: 强大的 diff 和历史可视化 | Powerful diff and history visualization
+- **快捷操作**: 一键暂存、blame、导航变更 | Quick staging, blame, navigate changes
+
 ### 📝 LaTeX 学术写作 (LaTeX Academic Writing)
 
 - **LSP**: texlab (强大的 LaTeX 语言服务器) | texlab (powerful LaTeX language server)
@@ -102,6 +119,26 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 rustup component add rust-analyzer clippy rustfmt
 ```
 
+### C/C++ 开发 (C/C++ Development)
+
+```bash
+# Fedora 43
+sudo dnf install gcc g++ clang make cmake gdb
+
+# 可选：安装 LLDB 调试器 (Optional: LLDB debugger)
+sudo dnf install lldb
+```
+
+### Git 工具 (Git Tools)
+
+```bash
+# Fedora 43
+sudo dnf install git lazygit
+
+# 验证安装 (Verify installation)
+lazygit --version
+```
+
 ### LaTeX 写作 (LaTeX Writing)
 
 ```bash
@@ -161,10 +198,12 @@ On first launch, LazyVim will automatically install all plugins and LSP servers.
 │   │   ├── ui.lua              # UI 增强
 │   │   ├── python.lua          # Python 开发
 │   │   ├── rust.lua            # Rust 开发
+│   │   ├── quickc.lua          # C/C++ 开发
 │   │   ├── latex.lua           # LaTeX 写作
 │   │   ├── markdown.lua        # Markdown 编辑
 │   │   ├── pdfview.lua         # PDF 查看
 │   │   ├── yazi.lua            # Yazi 文件管理
+│   │   ├── git.lua             # Git 工作流
 │   │   ├── treesitter.lua      # Tree-sitter
 │   │   ├── formatting.lua      # 格式化
 │   │   └── dap.lua             # 调试器
@@ -202,6 +241,33 @@ On first launch, LazyVim will automatically install all plugins and LSP servers.
 | `<leader>rr` | Rust 可运行项 | Rust runnables |
 | `<leader>rd` | Rust 可调试项 | Rust debuggables |
 | `<leader>cR` | Rust 代码操作 | Rust code action |
+
+### 🔨 C/C++ 开发 (C/C++ Development)
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<leader>cqb` | 构建当前文件 | Build current file |
+| `<leader>cqr` | 运行最近构建 | Run last build |
+| `<leader>cqR` | 构建并运行 | Build & Run |
+| `<leader>cqD` | 调试程序 | Debug with DAP |
+| `<leader>cqM` | Make 目标选择 | Make targets (Telescope) |
+| `<leader>cqC` | CMake 目标选择 | CMake targets (Telescope) |
+| `<leader>cqc` | CMake 配置 | CMake configure |
+| `<leader>cqB` | CMake 构建 | CMake build |
+
+### 🌿 Git 工作流 (Git Workflow)
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<leader>gg` | LazyGit | Open LazyGit |
+| `<leader>gs` | Git Status | Git Status (Fugitive) |
+| `<leader>gd` | Git Diff | Git Diff |
+| `<leader>gb` | Git Blame | Git Blame |
+| `<leader>gl` | Git Log | Git Log |
+| `<leader>hs` | 暂存 Hunk | Stage Hunk |
+| `<leader>hr` | 重置 Hunk | Reset Hunk |
+| `]h` | 下一个变更 | Next Hunk |
+| `[h` | 上一个变更 | Prev Hunk |
 
 ### LaTeX
 
