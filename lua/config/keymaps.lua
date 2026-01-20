@@ -99,6 +99,24 @@ keymap.set("n", "<leader>rr", "<cmd>RustRunnables<cr>", vim.tbl_extend("force", 
 keymap.set("n", "<leader>rd", "<cmd>RustDebuggables<cr>", vim.tbl_extend("force", opts, { desc = "Rust Debuggables" }))
 
 -- ---------------------------------------------------------
+-- Markdown 编写快捷键 (Markdown Writing Keymaps)
+-- ---------------------------------------------------------
+-- 💡 切换 Markdown 渲染 (Toggle Markdown rendering)
+-- (已在 markdown.lua 中定义为 <leader>mr)
+
+-- 💡 Markdown 预览 (Markdown preview in browser)
+-- (已在 markdown.lua 中定义为 <leader>mp)
+
+-- 💡 Glow 终端预览 (Glow terminal preview)
+-- (已在 markdown.lua 中定义为 <leader>mg)
+
+-- 💡 生成 TOC (Generate table of contents)
+-- (已在 markdown.lua 中定义为 <leader>mT)
+
+-- 💡 表格模式切换 (Toggle table mode)
+-- (已在 markdown.lua 中定义为 <leader>mt)
+
+-- ---------------------------------------------------------
 -- LaTeX 编写快捷键 (LaTeX Writing Keymaps)
 -- ---------------------------------------------------------
 -- 💡 注意: VimTeX 的主要快捷键使用 localleader (\)

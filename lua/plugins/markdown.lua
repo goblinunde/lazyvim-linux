@@ -8,6 +8,150 @@
 
 return {
   -- ---------------------------------------------------------
+  -- Render Markdown: Neovim 内渲染 Markdown
+  -- Render Markdown directly in Neovim buffer
+  -- ---------------------------------------------------------
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter", -- 语法高亮依赖
+      "nvim-tree/nvim-web-devicons",     -- 图标支持
+    },
+    opts = function()
+      local c = require("utils.colors")
+      local theme_colors = c.get_theme_colors()
+      
+      return {
+        -- 💡 启用渲染 (Enable rendering)
+        enabled = true,
+        -- 💡 最大文件大小 (Max file size in MB)
+        max_file_size = 10.0,
+        
+        -- 💡 标题渲染样式 (Heading rendering style)
+        heading = {
+          enabled = true,
+          sign = true,           -- 显示标题级别符号
+          icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+          backgrounds = {
+            "RenderMarkdownH1Bg",
+            "RenderMarkdownH2Bg",
+            "RenderMarkdownH3Bg",
+            "RenderMarkdownH4Bg",
+            "RenderMarkdownH5Bg",
+            "RenderMarkdownH6Bg",
+          },
+          foregrounds = {
+            "RenderMarkdownH1",
+            "RenderMarkdownH2",
+            "RenderMarkdownH3",
+            "RenderMarkdownH4",
+            "RenderMarkdownH5",
+            "RenderMarkdownH6",
+          },
+        },
+        
+        -- 💡 代码块渲染 (Code block rendering)
+        code = {
+          enabled = true,
+          sign = true,
+          style = "full",        -- full, normal, language
+          left_pad = 2,
+          right_pad = 2,
+          width = "block",
+          border = "thin",       -- thick, thin
+          highlight = "RenderMarkdownCode",
+        },
+        
+        -- 💡 列表符号渲染 (List bullet rendering)
+        bullet = {
+          enabled = true,
+          icons = { "●", "○", "◆", "◇" },
+          left_pad = 0,
+          right_pad = 1,
+        },
+        
+        -- 💡 复选框渲染 (Checkbox rendering)
+        checkbox = {
+          enabled = true,
+          unchecked = { icon = "󰄱 " },
+          checked = { icon = "󰱒 " },
+        },
+        
+        -- 💡 引用块渲染 (Quote block rendering)
+        quote = {
+          enabled = true,
+          icon = "▋",
+          highlight = "RenderMarkdownQuote",
+        },
+        
+        -- 💡 水平分割线 (Horizontal rule)
+        dash = {
+          enabled = true,
+          icon = "─",
+          width = "full",
+          highlight = "RenderMarkdownDash",
+        },
+        
+        -- 💡 链接渲染 (Link rendering)
+        link = {
+          enabled = true,
+          image = "󰥶 ",         -- 图片链接图标
+          hyperlink = "󰌹 ",     -- 超链接图标
+          highlight = "RenderMarkdownLink",
+        },
+        
+        -- 💡 表格渲染 (Table rendering)
+        pipe_table = {
+          enabled = true,
+          style = "full",
+          cell = "padded",
+          border = {
+            "┌", "┬", "┐",
+            "├", "┼", "┤",
+            "└", "┴", "┘",
+            "│", "─",
+          },
+        },
+        
+        -- 💡 快捷键 (Keymaps)
+        win_options = {
+          conceallevel = { default = vim.o.conceallevel, rendered = 3 },
+          concealcursor = { default = vim.o.concealcursor, rendered = "" },
+        },
+      }
+    end,
+    config = function(_, opts)
+      require("render-markdown").setup(opts)
+      
+      -- 💡 设置自定义高亮组 (Set custom highlight groups)
+      local c = require("utils.colors")
+      local theme_colors = c.get_theme_colors()
+      
+      vim.api.nvim_set_hl(0, "RenderMarkdownH1", { fg = c.colors.primary, bold = true })
+      vim.api.nvim_set_hl(0, "RenderMarkdownH2", { fg = c.colors.accent, bold = true })
+      vim.api.nvim_set_hl(0, "RenderMarkdownH3", { fg = c.colors.semantic.info, bold = true })
+      vim.api.nvim_set_hl(0, "RenderMarkdownH4", { fg = c.colors.semantic.success })
+      vim.api.nvim_set_hl(0, "RenderMarkdownH5", { fg = c.colors.semantic.warning })
+      vim.api.nvim_set_hl(0, "RenderMarkdownH6", { fg = theme_colors.fg })
+      
+      vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { bg = theme_colors.bg_soft })
+      vim.api.nvim_set_hl(0, "RenderMarkdownH2Bg", { bg = theme_colors.bg_mute })
+      vim.api.nvim_set_hl(0, "RenderMarkdownCode", { bg = theme_colors.bg_soft })
+      vim.api.nvim_set_hl(0, "RenderMarkdownQuote", { fg = c.colors.semantic.info, italic = true })
+      vim.api.nvim_set_hl(0, "RenderMarkdownDash", { fg = theme_colors.fg_dim })
+      vim.api.nvim_set_hl(0, "RenderMarkdownLink", { fg = c.colors.accent, underline = true })
+    end,
+    keys = {
+      {
+        "<leader>mr",
+        "<cmd>RenderMarkdown toggle<cr>",
+        desc = "Toggle Markdown Rendering",
+      },
+    },
+  },
+
+  -- ---------------------------------------------------------
   -- Markdown Preview: 实时预览
   -- Real-time Markdown preview in browser
   -- ---------------------------------------------------------

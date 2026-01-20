@@ -18,6 +18,10 @@ M.colors = {
   primary_soft = "#4A6A73",      -- Soft variant for borders
   primary_mute = "#3D5C66",      -- Muted variant for backgrounds
   
+  -- Accent color: 强调色 (用于链接和重要元素)
+  accent = "#1976D2",            -- Accent blue for links and highlights
+
+  
   -- Dark mode palette: 深色模式配色
   dark = {
     bg = "#1A3038",              -- 深青黑背景 (Deep teal-black background)
