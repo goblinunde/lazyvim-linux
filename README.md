@@ -44,14 +44,17 @@
 
 ### 📄 Markdown 编辑与预览 (Markdown Editing & Preview)
 
+- **内置渲染**: render-markdown.nvim (Neovim 内即时渲染) | render-markdown.nvim (instant rendering in Neovim)
 - **浏览器预览**: markdown-preview.nvim (实时预览) | markdown-preview.nvim (live preview)
 - **终端预览**: Glow (轻量级预览) | Glow (lightweight preview)
 - **表格编辑**: vim-table-mode (自动格式化) | vim-table-mode (auto-formatting)
 - **目录生成**: vim-markdown-toc (自动 TOC) | vim-markdown-toc (auto TOC)
 - **智能列表**: bullets.vim (复选框管理) | bullets.vim (checkbox management)
+- **智能软换行**: 自动在单词边界换行，保持缩进 | Smart soft wrap at word boundaries with indent preservation
 
 ### 🛠️ 其他功能 (Other Features)
 
+- **文件预览**: PDF、图片、视频等格式一键预览 | File preview for PDF, images, videos
 - **Tree-sitter**: 增强语法高亮和代码理解 | Enhanced syntax highlighting
 - **自动格式化**: 保存时自动格式化代码 | Format on save
 - **DAP调试器**: 统一的调试界面 | Unified debugging interface
@@ -196,6 +199,7 @@ On first launch, LazyVim will automatically install all plugins and LSP servers.
 
 | 快捷键 | 功能 | Description |
 |--------|------|-------------|
+| `<leader>mr` | Neovim 内渲染 | Render in Neovim |
 | `<leader>mp` | 浏览器预览 | Browser preview |
 | `<leader>mg` | 终端预览 (Glow) | Terminal preview (Glow) |
 | `<leader>mt` | 表格模式 | Table mode |
@@ -246,6 +250,17 @@ On first launch, LazyVim will automatically install all plugins and LSP servers.
 | `<leader>bD` | 强制删除缓冲区 | Force delete buffer |
 | `<S-h>` | 上一个缓冲区 | Previous buffer |
 | `<S-l>` | 下一个缓冲区 | Next buffer |
+
+### 👁️ 文件预览 (File Preview)
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<leader>fp` | 预览文件 | Preview file |
+| `<leader>fo` | 打开文件夹 | Open in file manager |
+| `<leader>fx` | 系统默认打开 | Open with system default |
+| `<leader>fpe` | Evince 打开 | Open with Evince |
+| `<leader>fpv` | MPV 打开 | Open with MPV |
+| `<leader>uw` | 切换软换行 | Toggle soft wrap |
 
 ### 💻 代码编辑 (Code Editing)
 
