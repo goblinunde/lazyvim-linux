@@ -180,3 +180,97 @@ keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr>", vim.tbl_extend("force", opts, { 
 
 -- 💡 快速退出 (Quick quit)
 keymap.set("n", "<leader>qq", "<cmd>qa<cr>", vim.tbl_extend("force", opts, { desc = "Quit all" }))
+
+-- ---------------------------------------------------------
+-- 文件预览功能 (File Preview Functionality)
+-- ---------------------------------------------------------
+-- 💡 文件预览核心函数 (Core file preview functions)
+local FilePreview = {}
+
+--- 预览当前文件 (Preview current file)
+function FilePreview.preview_file()
+  local file = vim.fn.expand("%:p")
+  
+  if vim.fn.filereadable(file) == 0 then
+    vim.notify("❌ 文件不存在或无法读取", vim.log.levels.ERROR)
+    return
+  end
+
+  local ext = vim.fn.fnamemodify(file, ":e"):lower()
+  
+  -- 支持的预览格式
+  local preview_exts = {
+    pdf = true, png = true, jpg = true, jpeg = true, gif = true, svg = true,
+    webp = true, bmp = true, mp4 = true, mkv = true, avi = true, mov = true,
+    mp3 = true, wav = true, flac = true, ogg = true, docx = true, xlsx = true,
+    pptx = true, odt = true, ods = true, odp = true,
+  }
+
+  if not preview_exts[ext] and ext ~= "" then
+    vim.notify("ℹ️  文件类型 '" .. ext .. "' 可能不支持预览", vim.log.levels.INFO)
+  end
+
+  vim.fn.jobstart({ "xdg-open", file }, {
+    detach = true,
+    on_exit = function(_, code)
+      if code == 0 then
+        vim.notify("✅ 已打开: " .. vim.fn.fnamemodify(file, ":t"), vim.log.levels.INFO)
+      else
+        vim.notify("❌ 无法打开文件", vim.log.levels.ERROR)
+      end
+    end,
+  })
+end
+
+--- 在文件管理器中打开 (Open in file manager)
+function FilePreview.open_in_file_manager()
+  local file = vim.fn.expand("%:p")
+  
+  if vim.fn.filereadable(file) == 0 then
+    vim.notify("❌ 文件不存在", vim.log.levels.ERROR)
+    return
+  end
+
+  local dir = vim.fn.fnamemodify(file, ":h")
+  
+  vim.fn.jobstart({ "xdg-open", dir }, {
+    detach = true,
+    on_exit = function(_, code)
+      if code == 0 then
+        vim.notify("📂 已打开文件夹: " .. vim.fn.fnamemodify(dir, ":t"), vim.log.levels.INFO)
+      end
+    end,
+  })
+end
+
+--- 用指定程序打开 (Open with specific program)
+function FilePreview.open_with(program)
+  local file = vim.fn.expand("%:p")
+  
+  if vim.fn.filereadable(file) == 0 then
+    vim.notify("❌ 文件不存在", vim.log.levels.ERROR)
+    return
+  end
+
+  vim.fn.jobstart({ program, file }, {
+    detach = true,
+    on_exit = function(_, code)
+      if code == 0 then
+        vim.notify("✅ 已用 " .. program .. " 打开", vim.log.levels.INFO)
+      else
+        vim.notify("❌ 无法用 " .. program .. " 打开", vim.log.levels.ERROR)
+      end
+    end,
+  })
+end
+
+-- 💡 文件预览快捷键 (File preview keymaps)
+keymap.set("n", "<leader>fp", FilePreview.preview_file, vim.tbl_extend("force", opts, { desc = "Preview File" }))
+keymap.set("n", "<leader>fo", FilePreview.open_in_file_manager, vim.tbl_extend("force", opts, { desc = "Open in File Manager" }))
+keymap.set("n", "<leader>fx", FilePreview.preview_file, vim.tbl_extend("force", opts, { desc = "Open with Default" }))
+
+-- 💡 用特定程序打开 (Open with specific programs)
+keymap.set("n", "<leader>fpe", function() FilePreview.open_with("evince") end, vim.tbl_extend("force", opts, { desc = "Open with Evince" }))
+keymap.set("n", "<leader>fpz", function() FilePreview.open_with("zathura") end, vim.tbl_extend("force", opts, { desc = "Open with Zathura" }))
+keymap.set("n", "<leader>fpi", function() FilePreview.open_with("eog") end, vim.tbl_extend("force", opts, { desc = "Open with EOG" }))
+keymap.set("n", "<leader>fpv", function() FilePreview.open_with("mpv") end, vim.tbl_extend("force", opts, { desc = "Open with MPV" }))
