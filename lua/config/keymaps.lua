@@ -165,6 +165,16 @@ keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", vim.tbl_extend("force", opts, { des
 -- ---------------------------------------------------------
 -- 其他便捷快捷键 (Other Convenient Keymaps)
 -- ---------------------------------------------------------
+-- 💡 切换软换行 (Toggle soft wrap)
+keymap.set("n", "<leader>uw", function()
+  vim.wo.wrap = not vim.wo.wrap
+  if vim.wo.wrap then
+    print("✅ 软换行已启用 (Soft wrap enabled)")
+  else
+    print("❌ 软换行已禁用 (Soft wrap disabled)")
+  end
+end, vim.tbl_extend("force", opts, { desc = "Toggle wrap" }))
+
 -- 💡 清除搜索高亮 (Clear search highlight)
 keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr>", vim.tbl_extend("force", opts, { desc = "Clear search highlight" }))
 

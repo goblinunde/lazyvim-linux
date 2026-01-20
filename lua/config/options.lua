@@ -38,7 +38,12 @@ opt.smartcase = true   -- 智能大小写搜索 (Smart case search)
 opt.termguicolors = true  -- 启用真彩色 (Enable true colors)
 opt.cursorline = true     -- 高亮当前行 (Highlight current line)
 opt.signcolumn = "yes"    -- 总是显示符号列 (Always show sign column)
-opt.wrap = false          -- 不自动换行 (No line wrapping)
+
+-- 💡 智能软换行设置 (Smart soft wrapping)
+opt.wrap = true           -- 启用自动换行 (Enable line wrapping)
+opt.linebreak = true      -- 在单词边界换行，而非字符中间 (Break at word boundaries)
+opt.breakindent = true    -- 保持换行后的缩进 (Preserve indentation on wrapped lines)
+opt.showbreak = "↪ "      -- 换行标记 (Mark wrapped lines with this symbol)
 
 -- 💡 滚动设置 (Scrolling settings)
 opt.scrolloff = 8         -- 光标上下保留8行 (Keep 8 lines above/below cursor)
