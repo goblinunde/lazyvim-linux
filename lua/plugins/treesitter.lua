@@ -125,9 +125,7 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-    end,
+    -- 💡 不需要 config 函数，LazyVim 会自动处理 (No config function needed, LazyVim handles it)
   },
 
   -- ---------------------------------------------------------
