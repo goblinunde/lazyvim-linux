@@ -172,3 +172,56 @@ require("lazy").setup({
     url_format = "https://github.com/%s.git",
   },
 })
+
+-- =========================================================
+-- i18n 用户命令 (i18n User Commands)
+-- =========================================================
+-- 💡 延迟加载，避免影响启动速度 (Delay loading to avoid affecting startup)
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    local i18n = require("i18n")
+    
+    -- 💡 创建语言切换命令 (Create language switch command)
+    vim.api.nvim_create_user_command("LangSwitch", function(opts)
+      local lang = opts.args
+      if lang and lang ~= "" then
+        i18n.switch_language(lang)
+      else
+        vim.notify("Usage: :LangSwitch <language_code>", vim.log.levels.ERROR)
+      end
+    end, {
+      nargs = 1,
+      desc = i18n.t("commands.lang_switch_desc"),
+      complete = function()
+        local langs = {}
+        for code, _ in pairs(i18n.list_languages()) do
+          table.insert(langs, code)
+        end
+        return langs
+      end,
+    })
+    
+    -- 💡 创建语言列表命令 (Create language list command)
+    vim.api.nvim_create_user_command("LangList", function()
+      local current = i18n.get_current_language()
+      local languages = i18n.list_languages()
+      
+      local msg = i18n.t("commands.current_language", { language = languages[current] }) .. "\n\n"
+      msg = msg .. i18n.t("commands.available_languages") .. "\n"
+      
+      for code, name in pairs(languages) do
+        local marker = (code == current) and "★ " or "  "
+        msg = msg .. string.format("%s%s (%s)\n", marker, name, code)
+      end
+      
+      vim.notify(msg, vim.log.levels.INFO)
+    end, {
+      desc = i18n.t("commands.lang_list_desc"),
+    })
+    
+    -- 💡 添加 Telescope 语言选择器快捷键 (Add Telescope language picker keybinding)
+    vim.keymap.set("n", "<leader>uL", function()
+      require("utils.telescope_lang_picker").pick_language()
+    end, { noremap = true, silent = true, desc = i18n.t("prompts.select_language") })
+  end,
+})

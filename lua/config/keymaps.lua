@@ -10,6 +10,7 @@
 
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
+local i18n = require("i18n")
 
 -- ---------------------------------------------------------
 -- Leader 键设置 (Leader key setting)
@@ -22,81 +23,81 @@ local opts = { noremap = true, silent = true }
 -- 通用编辑快捷键 (General Editing Keymaps)
 -- ---------------------------------------------------------
 -- 💡 保存文件 (Save file)
-keymap.set("n", "<C-s>", "<cmd>w<cr>", vim.tbl_extend("force", opts, { desc = "Save file" }))
-keymap.set("i", "<C-s>", "<cmd>w<cr><esc>", vim.tbl_extend("force", opts, { desc = "Save file and exit insert" }))
-keymap.set("v", "<C-s>", "<cmd>w<cr>", vim.tbl_extend("force", opts, { desc = "Save file" }))
+keymap.set("n", "<C-s>", "<cmd>w<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.save_file") }))
+keymap.set("i", "<C-s>", "<cmd>w<cr><esc>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.save_file_exit_insert") }))
+keymap.set("v", "<C-s>", "<cmd>w<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.save_file") }))
 
 -- 💡 另存为 (Save as)
 keymap.set("n", "<leader>fs", function()
-  local new_name = vim.fn.input("Save as: ", vim.fn.expand("%"), "file")
+  local new_name = vim.fn.input(i18n.t("prompts.save_as_prompt"), vim.fn.expand("%"), "file")
   if new_name ~= "" and new_name ~= vim.fn.expand("%") then
     vim.cmd("saveas " .. new_name)
   end
-end, vim.tbl_extend("force", opts, { desc = "Save As" }))
+end, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.save_as") }))
 
 -- 💡 全选 (Select all)
-keymap.set("n", "<C-a>", "ggVG", vim.tbl_extend("force", opts, { desc = "Select all" }))
+keymap.set("n", "<C-a>", "ggVG", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.select_all") }))
 
 -- 💡 复制粘贴撤销 (Copy, Paste, Undo, Redo)
 -- 使用系统剪贴板 (Use system clipboard)
-keymap.set({ "n", "v" }, "<C-c>", '"+y', vim.tbl_extend("force", opts, { desc = "Copy to clipboard" }))
-keymap.set({ "n", "v" }, "<C-x>", '"+d', vim.tbl_extend("force", opts, { desc = "Cut to clipboard" }))
-keymap.set({ "n", "i" }, "<C-v>", '"+p', vim.tbl_extend("force", opts, { desc = "Paste from clipboard" }))
-keymap.set("v", "<C-v>", '"+p', vim.tbl_extend("force", opts, { desc = "Paste from clipboard" }))
+keymap.set({ "n", "v" }, "<C-c>", '"+y', vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.copy_to_clipboard") }))
+keymap.set({ "n", "v" }, "<C-x>", '"+d', vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.cut_to_clipboard") }))
+keymap.set({ "n", "i" }, "<C-v>", '"+p', vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.paste_from_clipboard") }))
+keymap.set("v", "<C-v>", '"+p', vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.paste_from_clipboard") }))
 
 -- 💡 撤销和重做 (Undo and Redo)
-keymap.set("n", "<C-z>", "u", vim.tbl_extend("force", opts, { desc = "Undo" }))
-keymap.set("i", "<C-z>", "<C-o>u", vim.tbl_extend("force", opts, { desc = "Undo" }))
-keymap.set("n", "<C-y>", "<C-r>", vim.tbl_extend("force", opts, { desc = "Redo" }))
-keymap.set("i", "<C-y>", "<C-o><C-r>", vim.tbl_extend("force", opts, { desc = "Redo" }))
+keymap.set("n", "<C-z>", "u", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.undo") }))
+keymap.set("i", "<C-z>", "<C-o>u", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.undo") }))
+keymap.set("n", "<C-y>", "<C-r>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.redo") }))
+keymap.set("i", "<C-y>", "<C-o><C-r>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.redo") }))
 
 -- 💡 Visual 模式下保持选中 (Keep selection after indent)
-keymap.set("v", "<", "<gv", vim.tbl_extend("force", opts, { desc = "Indent left" }))
-keymap.set("v", ">", ">gv", vim.tbl_extend("force", opts, { desc = "Indent right" }))
+keymap.set("v", "<", "<gv", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.indent_left") }))
+keymap.set("v", ">", ">gv", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.indent_right") }))
 
 -- 💡 移动选中的行 (Move selected lines)
-keymap.set("v", "J", ":m '>+1<CR>gv=gv", vim.tbl_extend("force", opts, { desc = "Move line down" }))
-keymap.set("v", "K", ":m '<-2<CR>gv=gv", vim.tbl_extend("force", opts, { desc = "Move line up" }))
+keymap.set("v", "J", ":m '>+1<CR>gv=gv", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.move_line_down") }))
+keymap.set("v", "K", ":m '<-2<CR>gv=gv", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.move_line_up") }))
 
 -- 💡 更好的上下移动 (Better up/down movement)
 keymap.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 keymap.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- 💡 窗口导航 (Window navigation)
-keymap.set("n", "<C-h>", "<C-w>h", vim.tbl_extend("force", opts, { desc = "Go to left window" }))
-keymap.set("n", "<C-j>", "<C-w>j", vim.tbl_extend("force", opts, { desc = "Go to lower window" }))
-keymap.set("n", "<C-k>", "<C-w>k", vim.tbl_extend("force", opts, { desc = "Go to upper window" }))
-keymap.set("n", "<C-l>", "<C-w>l", vim.tbl_extend("force", opts, { desc = "Go to right window" }))
+keymap.set("n", "<C-h>", "<C-w>h", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.go_to_left_window") }))
+keymap.set("n", "<C-j>", "<C-w>j", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.go_to_lower_window") }))
+keymap.set("n", "<C-k>", "<C-w>k", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.go_to_upper_window") }))
+keymap.set("n", "<C-l>", "<C-w>l", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.go_to_right_window") }))
 
 -- 💡 缓冲区导航 (Buffer navigation)
-keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", vim.tbl_extend("force", opts, { desc = "Prev buffer" }))
-keymap.set("n", "<S-l>", "<cmd>bnext<cr>", vim.tbl_extend("force", opts, { desc = "Next buffer" }))
-keymap.set("n", "<leader>bd", "<cmd>bdelete<cr>", vim.tbl_extend("force", opts, { desc = "Delete buffer" }))
-keymap.set("n", "<leader>bD", "<cmd>%bd|e#<cr>", vim.tbl_extend("force", opts, { desc = "Delete all buffers except current" }))
+keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.prev_buffer") }))
+keymap.set("n", "<S-l>", "<cmd>bnext<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.next_buffer") }))
+keymap.set("n", "<leader>bd", "<cmd>bdelete<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.delete_buffer") }))
+keymap.set("n", "<leader>bD", "<cmd>%bd|e#<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.delete_all_buffers_except_current") }))
 
 
 -- ---------------------------------------------------------
 -- Python 开发快捷键 (Python Development Keymaps)
 -- ---------------------------------------------------------
 -- 💡 Python 虚拟环境选择 (Python virtual environment selection)
-keymap.set("n", "<leader>pv", "<cmd>VenvSelect<cr>", vim.tbl_extend("force", opts, { desc = "Select Python VirtualEnv" }))
+keymap.set("n", "<leader>pv", "<cmd>VenvSelect<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.select_python_venv") }))
 
 -- 💡 Python 调试快捷键 (Python debugging keymaps)
 keymap.set("n", "<leader>pt", function()
   require("dap-python").test_method()
-end, vim.tbl_extend("force", opts, { desc = "Debug Python Test Method" }))
+end, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.debug_python_test_method") }))
 
 keymap.set("n", "<leader>pc", function()
   require("dap-python").test_class()
-end, vim.tbl_extend("force", opts, { desc = "Debug Python Test Class" }))
+end, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.debug_python_test_class") }))
 
 -- ---------------------------------------------------------
 -- Rust 开发快捷键 (Rust Development Keymaps)
 -- ---------------------------------------------------------
 -- 💡 Rust 快捷键在 rust.lua 中已定义 (Rust keymaps defined in rust.lua)
 -- 这里添加额外的便捷快捷键 (Additional convenience keymaps)
-keymap.set("n", "<leader>rr", "<cmd>RustRunnables<cr>", vim.tbl_extend("force", opts, { desc = "Rust Runnables" }))
-keymap.set("n", "<leader>rd", "<cmd>RustDebuggables<cr>", vim.tbl_extend("force", opts, { desc = "Rust Debuggables" }))
+keymap.set("n", "<leader>rr", "<cmd>RustRunnables<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.rust_runnables") }))
+keymap.set("n", "<leader>rd", "<cmd>RustDebuggables<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.rust_debuggables") }))
 
 -- ---------------------------------------------------------
 -- C/C++ 开发快捷键 (C/C++ Development Keymaps)
@@ -151,19 +152,19 @@ keymap.set("n", "<leader>rd", "<cmd>RustDebuggables<cr>", vim.tbl_extend("force"
 -- Note: Main VimTeX keymaps use localleader (\)
 
 -- 💡 快速编译 LaTeX (Quick compile LaTeX)
-keymap.set("n", "<leader>ll", "<cmd>VimtexCompile<cr>", vim.tbl_extend("force", opts, { desc = "LaTeX Compile" }))
+keymap.set("n", "<leader>ll", "<cmd>VimtexCompile<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.latex_compile") }))
 
 -- 💡 查看 PDF (View PDF)
-keymap.set("n", "<leader>lv", "<cmd>VimtexView<cr>", vim.tbl_extend("force", opts, { desc = "LaTeX View PDF" }))
+keymap.set("n", "<leader>lv", "<cmd>VimtexView<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.latex_view_pdf") }))
 
 -- 💡 清理辅助文件 (Clean auxiliary files)
-keymap.set("n", "<leader>lc", "<cmd>VimtexClean<cr>", vim.tbl_extend("force", opts, { desc = "LaTeX Clean" }))
+keymap.set("n", "<leader>lc", "<cmd>VimtexClean<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.latex_clean") }))
 
 -- 💡 打开目录 (Open TOC)
-keymap.set("n", "<leader>lt", "<cmd>VimtexTocOpen<cr>", vim.tbl_extend("force", opts, { desc = "LaTeX TOC" }))
+keymap.set("n", "<leader>lt", "<cmd>VimtexTocOpen<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.latex_toc") }))
 
 -- 💡 停止编译 (Stop compilation)
-keymap.set("n", "<leader>ls", "<cmd>VimtexStop<cr>", vim.tbl_extend("force", opts, { desc = "LaTeX Stop" }))
+keymap.set("n", "<leader>ls", "<cmd>VimtexStop<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.latex_stop") }))
 
 -- ---------------------------------------------------------
 -- PDF 查看快捷键 (PDF Viewing Keymaps)
@@ -185,10 +186,10 @@ keymap.set("n", "<leader>ls", "<cmd>VimtexStop<cr>", vim.tbl_extend("force", opt
 -- end, vim.tbl_extend("force", opts, { desc = "Format" }))
 
 -- 💡 代码操作 (Code action)
-keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "Code Action" }))
+keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.code_action") }))
 
 -- 💡 重命名符号 (Rename symbol)
-keymap.set("n", "<leader>cr", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename" }))
+keymap.set("n", "<leader>cr", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.rename") }))
 
 -- ---------------------------------------------------------
 -- 终端快捷键 (Terminal Keymaps)
@@ -196,10 +197,10 @@ keymap.set("n", "<leader>cr", vim.lsp.buf.rename, vim.tbl_extend("force", opts, 
 -- 💡 打开浮动终端 (Open floating terminal)
 keymap.set("n", "<leader>ft", function()
   LazyVim.terminal()
-end, vim.tbl_extend("force", opts, { desc = "Terminal (cwd)" }))
+end, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.terminal_cwd") }))
 
 -- 💡 终端模式下的 ESC (ESC in terminal mode)
-keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", vim.tbl_extend("force", opts, { desc = "Exit terminal mode" }))
+keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.exit_terminal_mode") }))
 
 -- ---------------------------------------------------------
 -- 其他便捷快捷键 (Other Convenient Keymaps)
@@ -208,17 +209,17 @@ keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", vim.tbl_extend("force", opts, { des
 keymap.set("n", "<leader>uw", function()
   vim.wo.wrap = not vim.wo.wrap
   if vim.wo.wrap then
-    print("✅ 软换行已启用 (Soft wrap enabled)")
+    vim.notify(i18n.t("notifications.wrap_enabled"), vim.log.levels.INFO)
   else
-    print("❌ 软换行已禁用 (Soft wrap disabled)")
+    vim.notify(i18n.t("notifications.wrap_disabled"), vim.log.levels.INFO)
   end
-end, vim.tbl_extend("force", opts, { desc = "Toggle wrap" }))
+end, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.toggle_wrap") }))
 
 -- 💡 清除搜索高亮 (Clear search highlight)
-keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr>", vim.tbl_extend("force", opts, { desc = "Clear search highlight" }))
+keymap.set("n", "<Esc>", "<cmd>nohlsearch<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.clear_search_highlight") }))
 
 -- 💡 快速退出 (Quick quit)
-keymap.set("n", "<leader>qq", "<cmd>qa<cr>", vim.tbl_extend("force", opts, { desc = "Quit all" }))
+keymap.set("n", "<leader>qq", "<cmd>qa<cr>", vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.quit_all") }))
 
 -- ---------------------------------------------------------
 -- Yazi 文件管理器 (Yazi File Manager)
@@ -242,7 +243,7 @@ function FilePreview.preview_file()
   local file = vim.fn.expand("%:p")
   
   if vim.fn.filereadable(file) == 0 then
-    vim.notify("❌ 文件不存在或无法读取", vim.log.levels.ERROR)
+    vim.notify(i18n.t("notifications.file_not_exist"), vim.log.levels.ERROR)
     return
   end
 
@@ -257,16 +258,16 @@ function FilePreview.preview_file()
   }
 
   if not preview_exts[ext] and ext ~= "" then
-    vim.notify("ℹ️  文件类型 '" .. ext .. "' 可能不支持预览", vim.log.levels.INFO)
+    vim.notify(i18n.t("notifications.file_type_not_supported", { ext = ext }), vim.log.levels.INFO)
   end
 
   vim.fn.jobstart({ "xdg-open", file }, {
     detach = true,
     on_exit = function(_, code)
       if code == 0 then
-        vim.notify("✅ 已打开: " .. vim.fn.fnamemodify(file, ":t"), vim.log.levels.INFO)
+        vim.notify(i18n.t("notifications.file_opened", { filename = vim.fn.fnamemodify(file, ":t") }), vim.log.levels.INFO)
       else
-        vim.notify("❌ 无法打开文件", vim.log.levels.ERROR)
+        vim.notify(i18n.t("notifications.cannot_open_file"), vim.log.levels.ERROR)
       end
     end,
   })
@@ -277,7 +278,7 @@ function FilePreview.open_in_file_manager()
   local file = vim.fn.expand("%:p")
   
   if vim.fn.filereadable(file) == 0 then
-    vim.notify("❌ 文件不存在", vim.log.levels.ERROR)
+    vim.notify(i18n.t("notifications.file_not_exist"), vim.log.levels.ERROR)
     return
   end
 
@@ -287,7 +288,7 @@ function FilePreview.open_in_file_manager()
     detach = true,
     on_exit = function(_, code)
       if code == 0 then
-        vim.notify("📂 已打开文件夹: " .. vim.fn.fnamemodify(dir, ":t"), vim.log.levels.INFO)
+        vim.notify(i18n.t("notifications.folder_opened", { dirname = vim.fn.fnamemodify(dir, ":t") }), vim.log.levels.INFO)
       end
     end,
   })
@@ -298,7 +299,7 @@ function FilePreview.open_with(program)
   local file = vim.fn.expand("%:p")
   
   if vim.fn.filereadable(file) == 0 then
-    vim.notify("❌ 文件不存在", vim.log.levels.ERROR)
+    vim.notify(i18n.t("notifications.file_not_exist"), vim.log.levels.ERROR)
     return
   end
 
@@ -306,21 +307,21 @@ function FilePreview.open_with(program)
     detach = true,
     on_exit = function(_, code)
       if code == 0 then
-        vim.notify("✅ 已用 " .. program .. " 打开", vim.log.levels.INFO)
+        vim.notify(i18n.t("notifications.opened_with_program", { program = program }), vim.log.levels.INFO)
       else
-        vim.notify("❌ 无法用 " .. program .. " 打开", vim.log.levels.ERROR)
+        vim.notify(i18n.t("notifications.cannot_open_with_program", { program = program }), vim.log.levels.ERROR)
       end
     end,
   })
 end
 
 -- 💡 文件预览快捷键 (File preview keymaps)
-keymap.set("n", "<leader>fp", FilePreview.preview_file, vim.tbl_extend("force", opts, { desc = "Preview File" }))
-keymap.set("n", "<leader>fo", FilePreview.open_in_file_manager, vim.tbl_extend("force", opts, { desc = "Open in File Manager" }))
-keymap.set("n", "<leader>fx", FilePreview.preview_file, vim.tbl_extend("force", opts, { desc = "Open with Default" }))
+keymap.set("n", "<leader>fp", FilePreview.preview_file, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.preview_file") }))
+keymap.set("n", "<leader>fo", FilePreview.open_in_file_manager, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.open_in_file_manager") }))
+keymap.set("n", "<leader>fx", FilePreview.preview_file, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.open_with_default") }))
 
 -- 💡 用特定程序打开 (Open with specific programs)
-keymap.set("n", "<leader>fpe", function() FilePreview.open_with("evince") end, vim.tbl_extend("force", opts, { desc = "Open with Evince" }))
-keymap.set("n", "<leader>fpz", function() FilePreview.open_with("zathura") end, vim.tbl_extend("force", opts, { desc = "Open with Zathura" }))
-keymap.set("n", "<leader>fpi", function() FilePreview.open_with("eog") end, vim.tbl_extend("force", opts, { desc = "Open with EOG" }))
-keymap.set("n", "<leader>fpv", function() FilePreview.open_with("mpv") end, vim.tbl_extend("force", opts, { desc = "Open with MPV" }))
+keymap.set("n", "<leader>fpe", function() FilePreview.open_with("evince") end, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.open_with_evince") }))
+keymap.set("n", "<leader>fpz", function() FilePreview.open_with("zathura") end, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.open_with_zathura") }))
+keymap.set("n", "<leader>fpi", function() FilePreview.open_with("eog") end, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.open_with_eog") }))
+keymap.set("n", "<leader>fpv", function() FilePreview.open_with("mpv") end, vim.tbl_extend("force", opts, { desc = i18n.t("keymaps.open_with_mpv") }))

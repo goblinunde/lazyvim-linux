@@ -8,6 +8,9 @@
 -- Default options: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- =========================================================
 
+-- 💡 加载 i18n 系统 (Load i18n system)
+require("i18n")
+
 local opt = vim.opt
 
 -- ---------------------------------------------------------

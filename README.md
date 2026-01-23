@@ -85,6 +85,7 @@
 
 ### 🛠️ 其他功能 (Other Features)
 
+- **多语言支持**: 界面支持英语、简体中文、法语、德语 | Multilingual UI (English, Chinese, French, German)
 - **文件预览**: PDF、图片、视频等格式一键预览 | File preview for PDF, images, videos
 - **Tree-sitter**: 增强语法高亮和代码理解 | Enhanced syntax highlighting
 - **自动格式化**: 保存时自动格式化代码 | Format on save
@@ -193,6 +194,13 @@ On first launch, LazyVim will automatically install all plugins and LSP servers.
 │   │   ├── options.lua         # Neovim 选项
 │   │   ├── keymaps.lua         # 快捷键映射
 │   │   └── autocmds.lua        # 自动命令
+│   ├── i18n/                   # 国际化 (Internationalization)
+│   │   ├── init.lua            # i18n 核心模块
+│   │   └── locales/            # 语言包
+│   │       ├── en.lua          # 英语
+│   │       ├── zh_CN.lua       # 简体中文
+│   │       ├── fr.lua          # 法语
+│   │       └── de.lua          # 德语
 │   ├── plugins/                # 插件配置 (Plugin configurations)
 │   │   ├── colorscheme.lua     # 主题配置
 │   │   ├── ui.lua              # UI 增强
@@ -208,7 +216,17 @@ On first launch, LazyVim will automatically install all plugins and LSP servers.
 │   │   ├── formatting.lua      # 格式化
 │   │   └── dap.lua             # 调试器
 │   └── utils/                  # 工具模块 (Utility modules)
-│       └── colors.lua          # 颜色工具
+│       ├── colors.lua          # 颜色工具
+│       └── telescope_lang_picker.lua  # 语言选择器
+├── docs/                       # 文档 (Documentation)
+│   ├── I18N.md                 # 多语言支持指南
+│   ├── THEMES.md               # 主题配置指南
+│   ├── LANGUAGES.md            # 编程语言配置
+│   ├── MARKDOWN_AND_THEMES.md  # Markdown 与主题
+│   ├── PDFVIEW.md              # PDF 查看配置
+│   ├── FILE_PREVIEW.md         # 文件预览功能
+│   ├── TERMINAL.md             # 终端配置
+│   └── KEYBINDINGS.md          # 快捷键参考
 ├── resource.css                # UI 设计参考
 └── stylua.toml                 # Lua 格式化配置
 ```
@@ -390,6 +408,31 @@ On first launch, LazyVim will automatically install all plugins and LSP servers.
 | `<leader>cd` | 行诊断 | Line diagnostics |
 | `gcc` | 注释/取消注释 | Toggle comment |
 | `gc` | 注释（Visual 模式） | Comment (Visual) |
+
+### 🌍 语言切换 (Language Switching)
+
+| 快捷键 | 功能 | Description |
+|--------|------|-------------|
+| `<leader>uL` | 切换界面语言 | Switch UI language (Telescope) |
+
+**命令模式** (Command mode):
+
+```vim
+:LangList           # 列出所有可用语言
+:LangSwitch zh_CN   # 切换到简体中文
+:LangSwitch fr      # 切换到法语
+:LangSwitch de      # 切换到德语
+:LangSwitch en      # 切换到英语
+```
+
+**支持的语言** (Supported languages):
+
+- English (en) - 默认
+- 简体中文 (zh_CN)
+- Français (fr)
+- Deutsch (de)
+
+详细文档请参阅 [docs/I18N.md](docs/I18N.md)
 
 ### 🪟 窗口管理 (Window Management)
 
