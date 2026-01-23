@@ -245,6 +245,9 @@ return {
       ]]
 
       logo = string.rep("\n", 8) .. logo .. "\n\n"
+      
+      -- 💡 加载 i18n 以支持多语言 (Load i18n for multilingual support)
+      local i18n = require("i18n")
 
       local opts = {
         theme = "doom",
@@ -256,37 +259,37 @@ return {
           center = {
             {
               action = "Telescope find_files",
-              desc = " Find file",
+              desc = " " .. i18n.t("dashboard.find_file"),
               icon = " ",
               key = "f",
             },
             {
               action = "ene | startinsert",
-              desc = " New file",
+              desc = " " .. i18n.t("dashboard.new_file"),
               icon = " ",
               key = "n",
             },
             {
               action = "Telescope oldfiles",
-              desc = " Recent files",
+              desc = " " .. i18n.t("dashboard.recent_files"),
               icon = " ",
               key = "r",
             },
             {
               action = "Telescope live_grep",
-              desc = " Find text",
+              desc = " " .. i18n.t("dashboard.find_text"),
               icon = " ",
               key = "g",
             },
             {
               action = "Lazy",
-              desc = " Lazy",
+              desc = " " .. i18n.t("dashboard.lazy"),
               icon = "󰒲 ",
               key = "l",
             },
             {
               action = "qa",
-              desc = " Quit",
+              desc = " " .. i18n.t("dashboard.quit"),
               icon = " ",
               key = "q",
             },
@@ -294,7 +297,7 @@ return {
           footer = function()
             local stats = require("lazy").stats()
             local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-            return { "⚡ Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms" }
+            return { i18n.t("dashboard.loaded_plugins", { loaded = stats.loaded, count = stats.count, ms = ms }) }
           end,
         },
       }
