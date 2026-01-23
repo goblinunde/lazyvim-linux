@@ -184,6 +184,9 @@ function M.switch_language(new_lang)
   if M.load_language(new_lang) then
     M.save_language()
     
+    -- 💡 刷新 which-key 分组名称 (Refresh which-key group names)
+    M.refresh_which_key_groups()
+    
     -- 💡 通知用户语言已切换 (Notify user of language switch)
     vim.notify(
       string.format("✅ Language switched to %s", M.supported_languages[new_lang]),
@@ -212,6 +215,36 @@ end
 --- @return table 语言列表 (Language list)
 function M.list_languages()
   return M.supported_languages
+end
+
+-- ---------------------------------------------------------
+-- Which-key 分组刷新 (Which-key Group Refresh)
+-- ---------------------------------------------------------
+
+--- 刷新 which-key 分组名称 (Refresh which-key group names)
+function M.refresh_which_key_groups()
+  local ok, wk = pcall(require, "which-key")
+  if not ok then
+    return
+  end
+  
+  -- 💡 重新注册分组名称 (Re-register group names)
+  wk.add({
+    { "<leader>f", group = M.t("which_key.file") },
+    { "<leader>s", group = M.t("which_key.search") },
+    { "<leader>g", group = M.t("which_key.git") },
+    { "<leader>c", group = M.t("which_key.code") },
+    { "<leader>d", group = M.t("which_key.debug") },
+    { "<leader>b", group = M.t("which_key.buffer") },
+    { "<leader>w", group = M.t("which_key.window") },
+    { "<leader>u", group = M.t("which_key.ui") },
+    { "<leader>p", group = M.t("which_key.python") },
+    { "<leader>r", group = M.t("which_key.rust") },
+    { "<leader>l", group = M.t("which_key.latex") },
+    { "<leader>m", group = M.t("which_key.markdown") },
+    { "<leader>t", group = M.t("which_key.terminal") },
+    { "<leader>q", group = M.t("which_key.quit") },
+  })
 end
 
 -- ---------------------------------------------------------
