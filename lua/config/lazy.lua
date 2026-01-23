@@ -223,5 +223,26 @@ vim.api.nvim_create_autocmd("VimEnter", {
     vim.keymap.set("n", "<leader>uL", function()
       require("utils.telescope_lang_picker").pick_language()
     end, { noremap = true, silent = true, desc = i18n.t("prompts.select_language") })
+    
+    -- 💡 注册 which-key 分组名称 (Register which-key group names)
+    local ok, wk = pcall(require, "which-key")
+    if ok then
+      wk.add({
+        { "<leader>f", group = i18n.t("which_key.file") },
+        { "<leader>s", group = i18n.t("which_key.search") },
+        { "<leader>g", group = i18n.t("which_key.git") },
+        { "<leader>c", group = i18n.t("which_key.code") },
+        { "<leader>d", group = i18n.t("which_key.debug") },
+        { "<leader>b", group = i18n.t("which_key.buffer") },
+        { "<leader>w", group = i18n.t("which_key.window") },
+        { "<leader>u", group = i18n.t("which_key.ui") },
+        { "<leader>p", group = i18n.t("which_key.python") },
+        { "<leader>r", group = i18n.t("which_key.rust") },
+        { "<leader>l", group = i18n.t("which_key.latex") },
+        { "<leader>m", group = i18n.t("which_key.markdown") },
+        { "<leader>t", group = i18n.t("which_key.terminal") },
+        { "<leader>q", group = i18n.t("which_key.quit") },
+      })
+    end
   end,
 })
