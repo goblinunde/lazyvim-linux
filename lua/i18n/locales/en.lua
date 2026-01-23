@@ -153,4 +153,19 @@ M.prompts = {
   select_language = "Select Language",
 }
 
+-- ---------------------------------------------------------
+-- Dashboard (启动界面)
+-- ---------------------------------------------------------
+M.dashboard = {
+  find_file = "Find file",
+  new_file = "New file",
+  recent_files = "Recent files",
+  find_text = "Find text",
+  lazy = "Lazy",
+  quit = "Quit",
+  
+  -- Footer
+  loaded_plugins = "⚡ Neovim loaded {loaded}/{count} plugins in {ms}ms",
+}
+
 return M

@@ -154,4 +154,19 @@ M.prompts = {
   select_language = "选择语言",
 }
 
+-- ---------------------------------------------------------
+-- Dashboard (启动界面)
+-- ---------------------------------------------------------
+M.dashboard = {
+  find_file = "查找文件",
+  new_file = "新建文件",
+  recent_files = "最近文件",
+  find_text = "查找文本",
+  lazy = "插件管理",
+  quit = "退出",
+  
+  -- Footer
+  loaded_plugins = "⚡ Neovim 已加载 {loaded}/{count} 个插件，耗时 {ms}ms",
+}
+
 return M
