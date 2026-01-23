@@ -146,6 +146,26 @@ M.commands = {
 }
 
 -- ---------------------------------------------------------
+-- Which-key Group Names (分组名称)
+-- ---------------------------------------------------------
+M.which_key = {
+  file = "Fichier",
+  search = "Rechercher",
+  git = "Git",
+  code = "Code",
+  debug = "Débogage",
+  buffer = "Tampon",
+  window = "Fenêtre",
+  ui = "Interface",
+  python = "Python",
+  rust = "Rust",
+  latex = "LaTeX",
+  markdown = "Markdown",
+  terminal = "Terminal",
+  quit = "Quitter",
+}
+
+-- ---------------------------------------------------------
 -- Prompts (提示)
 -- ---------------------------------------------------------
 M.prompts = {
