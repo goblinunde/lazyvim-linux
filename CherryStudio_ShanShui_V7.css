@@ -1,0 +1,346 @@
+/* =========================================================
+   山水·数理 (Shan-shui: Logic) - Rhythm Edition V7.0
+   Design: Refined for Cherry Studio
+   Update: 引入“气韵”概念，增加文字流光、呼吸动效与渐变细节
+   ========================================================= */
+
+:root {
+    /* --- 字体系统 --- */
+    --font-code: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+    --font-body: "HarmonyOS Sans", "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+    
+    /* --- 动效与圆角 --- */
+    --radius-ui: 12px;
+    --radius-card: 16px;
+    --transition-speed: 0.4s;
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---------------------------------------------------------
+   一、深色模式 (DARK MODE - 极光幽谷)
+   --------------------------------------------------------- */
+body[theme-mode="dark"] {
+    /* 背景：午夜青黑 */
+    --color-bg-base: #0F171A;
+    --color-bg-card: rgba(22, 34, 40, 0.65); /* 更通透的磨砂 */
+    --color-bg-hover: #1C2B33;
+
+    /* 主色调体系：青 -> 黛 -> 蓝 (渐变基础) */
+    --color-primary: #5FB3C5; 
+    --color-primary-light: #8ADDED; /* 渐变亮部 */
+    --color-primary-dim: rgba(95, 179, 197, 0.15);
+    
+    /* 发光与投影 */
+    --color-glow: rgba(95, 179, 197, 0.5);
+    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.15);
+    
+    /* 文字系统 */
+    --color-text-main: #E3ECEF;
+    --color-text-sub: #94AAB3;
+    --color-text-code: #A7C5D1;
+
+    /* 边框与分割线 */
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-hover: rgba(95, 179, 197, 0.4);
+
+    /* 代码块背景 */
+    --code-bg: #090C0E;
+    --code-header: rgba(30, 40, 45, 0.8);
+}
+
+/* ---------------------------------------------------------
+   二、浅色模式 (LIGHT MODE - 雨过天青)
+   --------------------------------------------------------- */
+body[theme-mode="light"] {
+    /* 背景：云水白 */
+    --color-bg-base: #F7F9FA;
+    --color-bg-card: rgba(255, 255, 255, 0.75);
+    --color-bg-hover: #EBF3F5;
+
+    /* 主色调体系 */
+    --color-primary: #2A6E78;
+    --color-primary-light: #4A9CA8;
+    --color-primary-dim: rgba(42, 110, 120, 0.08);
+    
+    --color-glow: rgba(42, 110, 120, 0.25);
+    --shadow-card: 0 8px 24px rgba(42, 110, 120, 0.06);
+
+    /* 文字系统 */
+    --color-text-main: #25363D;
+    --color-text-sub: #637A82;
+    --color-text-code: #3D5A66;
+
+    /* 边框 */
+    --color-border: rgba(0, 0, 0, 0.05);
+    --color-border-hover: rgba(42, 110, 120, 0.25);
+
+    /* 代码块背景 */
+    --code-bg: #F2F5F7;
+    --code-header: rgba(235, 240, 242, 0.8);
+}
+
+/* ---------------------------------------------------------
+   三、全局增强与选区
+   --------------------------------------------------------- */
+body {
+    font-family: var(--font-body);
+    color: var(--color-text-main);
+    background-color: var(--color-bg-base);
+    line-height: 1.8; 
+}
+
+/* 全局文字选区：高雅的青色背景 */
+::selection {
+    background-color: var(--color-primary-dim);
+    color: var(--color-primary);
+    text-shadow: none;
+}
+
+/* 背景纹理：增加层次 */
+#content-container, .conversation-list {
+    background-color: var(--color-bg-base) !important;
+}
+
+body[theme-mode="dark"] #content-container {
+    background-image: radial-gradient(var(--color-border) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+}
+
+body[theme-mode="light"] #content-container {
+    background-image: 
+        linear-gradient(var(--color-border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+    background-size: 36px 36px;
+}
+
+/* ---------------------------------------------------------
+   四、动效定义 (Animations)
+   --------------------------------------------------------- */
+
+/* 入场：上浮+淡入 */
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 呼吸：输入框聚焦时的柔和脉冲 */
+@keyframes breathe {
+    0% { box-shadow: 0 0 0 0px var(--color-primary-dim); border-color: var(--color-primary); }
+    50% { box-shadow: 0 0 0 4px var(--color-primary-dim); border-color: var(--color-primary-light); }
+    100% { box-shadow: 0 0 0 0px var(--color-primary-dim); border-color: var(--color-primary); }
+}
+
+/* ---------------------------------------------------------
+   五、对话气泡与玻璃形态
+   --------------------------------------------------------- */
+
+.message-item, .bubble {
+    border-radius: var(--radius-card);
+    transition: all var(--transition-speed) ease;
+    animation: slideInUp 0.5s var(--ease-bounce) forwards; 
+    
+    /* 极致磨砂 */
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+}
+
+/* 用户气泡：微晶质感 */
+.message-item.is-user .bubble {
+    background: linear-gradient(135deg, var(--color-primary-dim), rgba(0,0,0,0));
+    border: 1px solid var(--color-primary);
+    border-top-color: var(--color-primary-light); /* 顶部高光 */
+    color: var(--color-text-main);
+}
+
+/* AI 气泡：悬浮卡片 */
+.message-item:not(.is-user) .bubble {
+    background-color: var(--color-bg-card) !important;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card);
+}
+
+/* 悬停 AI 气泡：轻微上浮 + 边框发光 */
+.message-item:not(.is-user):hover .bubble {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    border-color: var(--color-border-hover);
+}
+
+/* ---------------------------------------------------------
+   六、Markdown 内容：流光溢彩
+   --------------------------------------------------------- */
+
+/* 1. 标题：渐变流光文字 (核心亮点) */
+h1, h2, h3 {
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    font-weight: 700;
+    
+    /* 文字渐变填充 */
+    background: linear-gradient(120deg, var(--color-primary), var(--color-text-main));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block; /* 必须为block才能应用渐变 */
+}
+
+h1, h2 {
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(to right, var(--color-border-hover), transparent) 1;
+    padding-bottom: 0.3em;
+    width: 100%;
+}
+
+/* 2. 重点强调 */
+strong {
+    color: var(--color-primary-light);
+    font-weight: 700;
+    padding: 0 2px;
+}
+
+/* 3. 代码块：Mac Pro 风格 */
+pre {
+    background-color: var(--code-bg) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: 12px !important;
+    padding-top: 36px !important; 
+    position: relative;
+    margin: 1.5em 0;
+    transition: all 0.3s;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.02);
+}
+
+pre:hover {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1), inset 0 0 0 1px var(--color-border-hover);
+    transform: scale(1.005);
+}
+
+/* 顶部栏：毛玻璃 */
+pre::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 36px;
+    background-color: var(--code-header);
+    backdrop-filter: blur(4px);
+    border-bottom: 1px solid var(--color-border);
+    border-radius: 12px 12px 0 0;
+    z-index: 0;
+}
+
+/* 红黄绿按钮 */
+pre::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #FF5F56; 
+    box-shadow: 18px 0 0 #FFBD2E, 36px 0 0 #27C93F; 
+    opacity: 0.8;
+    z-index: 2;
+}
+
+code {
+    font-family: var(--font-code) !important;
+    font-size: 0.9em;
+}
+
+/* 4. 引用块 */
+blockquote {
+    border-left: 4px solid var(--color-primary);
+    background: linear-gradient(90deg, var(--color-primary-dim), transparent);
+    margin: 1em 0;
+    padding: 12px 20px;
+    color: var(--color-text-sub);
+    border-radius: 0 10px 10px 0;
+    position: relative;
+}
+
+/* 5. 链接：流体动效 */
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    background: linear-gradient(to right, var(--color-primary), var(--color-primary)) no-repeat bottom left;
+    background-size: 0% 1.5px;
+    transition: background-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding-bottom: 2px;
+}
+
+a:hover {
+    background-size: 100% 1.5px;
+    color: var(--color-primary-light);
+}
+
+/* 6. 表格：精致边框 */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin: 1.5em 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+}
+
+th {
+    background: var(--color-primary-dim);
+    color: var(--color-primary);
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-sub);
+}
+
+tr:last-child td { border-bottom: none; }
+tr:hover td { background-color: var(--color-bg-hover); }
+
+/* ---------------------------------------------------------
+   七、UI 细节与交互
+   --------------------------------------------------------- */
+
+/* 艺术化滚动条 */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--color-border), var(--color-primary-dim));
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+}
+
+/* 输入框区域：呼吸聚焦 (核心交互) */
+.chat-input-area {
+    background-color: var(--color-bg-card) !important;
+    border-top: 1px solid var(--color-border);
+    backdrop-filter: blur(20px);
+    transition: all 0.3s;
+}
+
+/* 聚焦时的呼吸效果 */
+.chat-input-area:focus-within {
+    animation: breathe 3s infinite ease-in-out;
+}
+
+/* 公式显示优化 */
+.katex-display {
+    padding: 1.2em;
+    background: radial-gradient(circle at center, var(--code-bg), var(--color-bg-base));
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.02);
+}
