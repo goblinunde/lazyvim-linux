@@ -1,0 +1,609 @@
+/* =========================================================
+   山水·数理 (Shan-shui: Logic) - Typora Theme
+   Based on Flow Edition V6.0
+   Ported for Typora by Gemini
+   Version: 1.5 (Functional Extension)
+   ========================================================= */
+
+:root {
+    /* --- 核心变量 (默认浅色 - 晨曦微光) --- */
+    
+    /* 字体系统 (多平台深度适配) */
+    --font-code: "JetBrains Mono", "Fira Code", "Cascadia Code", "Source Code Pro", "Menlo", "Monaco", "Consolas", "Courier New", monospace;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", 
+                 "HarmonyOS Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    
+    --bg-color: #F7F9FA;
+    --side-bar-bg-color: #EEF2F4;
+    --text-color: #2C3E45;
+    --text-color-sub: #637A82;
+
+    /* 主色调：竹青色 */
+    --primary-color: #2A6E78;
+    --primary-dim: rgba(42, 110, 120, 0.08);
+    --primary-glow: rgba(42, 110, 120, 0.2);
+    --secondary-accent: #D64045; /* 辅助强调色 - 丹红 */
+    
+    /* 边框与卡片 */
+    --border-color: rgba(0, 0, 0, 0.06);
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --code-bg: #F0F4F5;
+    --code-header: #E6EBED;
+    
+    /* 窗口宽度限制 */
+    --max-width: 960px;
+    
+    /* 动效 */
+    --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --- 深色模式适配 (DARK MODE - 流光夜色) --- */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #0F171A;
+        --side-bar-bg-color: #0A0E10;
+        --text-color: #E3ECEF;
+        --text-color-sub: #8B9FA6;
+
+        /* 主色调：青黛色 */
+        --primary-color: #5FB3C5; 
+        --primary-dim: rgba(95, 179, 197, 0.15);
+        --primary-glow: rgba(95, 179, 197, 0.4);
+        --secondary-accent: #FF6B6B;
+        
+        --border-color: rgba(255, 255, 255, 0.08);
+        --card-bg: rgba(22, 34, 40, 0.7);
+        --code-bg: #0A0E10;
+        --code-header: #141C20;
+    }
+}
+
+/* =========================================================
+   全局基础设置
+   ========================================================= */
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-color);
+    background: var(--bg-color);
+    line-height: 1.75;
+}
+
+/* 背景纹理 */
+content {
+    background-image: 
+        linear-gradient(var(--border-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-attachment: local;
+}
+
+@media (prefers-color-scheme: dark) {
+    content {
+        background-image: radial-gradient(var(--border-color) 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
+    }
+}
+
+#write {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 40px 30px 100px;
+}
+
+/* =========================================================
+   标题系统 (H1 - H4)
+   ========================================================= */
+
+h1, h2, h3, h4 {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+h1 {
+    font-size: 2.2em;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.3em;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.75em;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 0.3em;
+}
+h2::before {
+    content: "§ ";
+    opacity: 0.4;
+    font-size: 0.8em;
+    margin-right: 4px;
+}
+
+h3 {
+    font-size: 1.4em;
+    padding-left: 12px;
+    border-left: 4px solid var(--primary-color);
+}
+
+h4 {
+    font-size: 1.2em;
+    color: var(--text-color-sub);
+    font-weight: 700;
+}
+
+@media (prefers-color-scheme: dark) {
+    h1, h2 {
+        text-shadow: 0 0 15px var(--primary-glow);
+        border-color: rgba(95, 179, 197, 0.3);
+    }
+}
+
+/* =========================================================
+   核心增强：结构与装饰 (v1.5 NEW)
+   ========================================================= */
+
+/* 1. YAML Front Matter (元数据区) */
+pre.md-meta-block {
+    background-color: var(--code-bg);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--secondary-accent); /* 强调色左边框 */
+    color: var(--text-color-sub);
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-family: var(--font-code);
+    font-size: 0.85em;
+    line-height: 1.5;
+    margin-bottom: 2em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+/* 2. TOC 目录卡片 */
+.md-toc {
+    background-color: var(--card-bg);
+    padding: 20px 20px 20px 10px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin: 2em 0;
+    backdrop-filter: blur(10px);
+}
+.md-toc-item {
+    color: var(--text-color);
+}
+.md-toc-inner:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* 3. 艺术分割线 HR */
+hr {
+    height: 2px;
+    border: none;
+    /* 渐变线条 */
+    background: linear-gradient(to right, transparent, var(--border-color), transparent);
+    margin: 4em 0;
+    position: relative;
+}
+/* 中间装饰符号 */
+hr::after {
+    content: "❖"; 
+    position: absolute;
+    left: 50%;
+    top: -12px;
+    transform: translateX(-50%);
+    background-color: var(--bg-color); /* 遮挡线条 */
+    padding: 0 10px;
+    color: var(--primary-color);
+    font-size: 1.2em;
+    font-weight: lighter;
+}
+
+/* 4. 脚注 (Footnotes) */
+.md-footnotes {
+    border-top: 1px dashed var(--border-color);
+    padding-top: 20px;
+    margin-top: 60px;
+    font-size: 0.9em;
+    color: var(--text-color-sub);
+}
+.md-def-name {
+    background-color: var(--primary-dim);
+    color: var(--primary-color);
+    padding: 1px 5px;
+    border-radius: 4px;
+    margin-right: 5px;
+    font-family: var(--font-code);
+}
+
+/* =========================================================
+   排版细节与视觉增强
+   ========================================================= */
+
+p { margin-bottom: 1.2em; }
+strong { color: var(--primary-color); font-weight: 700; }
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+}
+a:hover { border-bottom-color: var(--primary-color); }
+
+ul li {
+    list-style-type: none;
+    position: relative;
+    padding-left: 4px;
+}
+ul li::before {
+    content: "•";
+    color: var(--primary-color);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+blockquote {
+    border-left: 4px solid var(--primary-color);
+    background: linear-gradient(90deg, var(--primary-dim), transparent);
+    padding: 10px 16px;
+    color: var(--text-color-sub);
+    border-radius: 0 8px 8px 0;
+    margin: 1.5em 0;
+}
+
+::selection { background: var(--primary-dim); color: inherit; }
+
+/* 马克笔高亮 */
+mark {
+    background: transparent;
+    background-image: linear-gradient(to bottom, transparent 40%, rgba(255, 225, 0, 0.4) 40%);
+    color: inherit;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+@media (prefers-color-scheme: dark) {
+    mark {
+        background-image: linear-gradient(to bottom, transparent 40%, rgba(95, 179, 197, 0.3) 40%);
+        color: #fff;
+    }
+}
+
+/* 立体按键 KBD */
+kbd {
+    font-family: var(--font-code);
+    font-size: 0.85em;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color); 
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin: 0 4px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    color: var(--text-color);
+}
+
+/* 动态复选框 */
+.md-task-list-item > input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.1em;
+    height: 1.1em;
+    border: 1.5px solid var(--text-color-sub);
+    border-radius: 4px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.5em;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.5, 0.1, 0.2, 1);
+    position: relative;
+    top: -1px;
+}
+
+.md-task-list-item > input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: scale(1.05); 
+}
+
+.md-task-list-item > input:checked::before {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 4px;
+    width: 4px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.md-task-list-item.task-list-done {
+    color: var(--text-color-sub);
+    text-decoration: line-through;
+    opacity: 0.8;
+}
+
+/* 图片悬浮 */
+#write img {
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: block;
+    margin: 1.5em auto; 
+}
+
+#write img:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* =========================================================
+   代码块 (Mac 窗口风格)
+   ========================================================= */
+
+code {
+    font-family: var(--font-code);
+    color: var(--primary-color);
+    background-color: var(--primary-dim);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin: 0 2px;
+    font-size: 0.9em;
+}
+
+.md-fences {
+    background-color: var(--code-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 40px 15px 15px 15px !important;
+    margin: 1.5em 0;
+    font-family: var(--font-code);
+    font-size: 0.9em;
+    line-height: 1.6;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    transition: box-shadow 0.3s;
+}
+
+.md-fences:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    border-color: var(--primary-color);
+}
+
+.md-fences::before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #FF5F56; 
+    box-shadow: 18px 0 0 #FFBD2E, 36px 0 0 #27C93F; 
+    z-index: 5;
+    opacity: 0.8;
+}
+
+.md-fences::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 36px;
+    background-color: var(--code-header);
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 8px 8px 0 0;
+    z-index: 1;
+}
+
+.cm-s-inner .CodeMirror-gutters {
+    background-color: var(--code-bg) !important;
+    border-right: none;
+}
+
+/* =========================================================
+   LaTeX 数学公式 (高度定制)
+   ========================================================= */
+
+.md-inline-math script {
+    color: var(--primary-color);
+    font-size: 1.05em;
+}
+
+.md-math-block {
+    margin: 1.5em 0;
+    padding: 1.2em;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    backdrop-filter: blur(5px);
+}
+
+.md-math-block:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    border-color: var(--primary-color);
+}
+
+.jax {
+    font-size: 1.1em !important;
+    color: var(--text-color);
+}
+
+.md-math-block::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    bottom: 10px;
+    width: 3px;
+    background-color: var(--primary-color);
+    border-radius: 0 3px 3px 0;
+    opacity: 0.6;
+}
+
+/* =========================================================
+   表格 (三线表风格)
+   ========================================================= */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1.5em 0;
+    font-size: 0.95em;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+thead th {
+    border-top: 2px solid var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding: 12px 10px;
+    background-color: var(--primary-dim);
+    color: var(--text-color);
+    text-align: left;
+}
+
+tbody td {
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px;
+    color: var(--text-color-sub);
+}
+
+tbody tr:hover td {
+    background-color: var(--primary-dim);
+}
+
+tbody tr:last-child td {
+    border-bottom: 2px solid var(--primary-color); 
+}
+
+/* =========================================================
+   侧边栏 (Sidebar) - 动效增强版
+   ========================================================= */
+
+#typora-sidebar {
+    background-color: var(--side-bar-bg-color);
+    border-right: 1px solid var(--border-color);
+    font-size: 0.9rem;
+}
+
+.file-node-content {
+    transition: all var(--transition-fast);
+    border-left: 3px solid transparent;
+    padding-left: 8px;
+}
+
+.file-node-content:hover {
+    padding-left: 12px;
+    background-color: var(--primary-dim);
+    cursor: pointer;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-title {
+    color: var(--primary-color);
+}
+
+.file-node-content.is-active {
+    background-color: var(--primary-dim);
+    color: var(--primary-color);
+    border-left-color: var(--primary-color);
+    font-weight: 600;
+}
+
+.file-node-icon {
+    transition: transform 0.3s ease;
+}
+
+.file-tree-node.file-library-node.file-node-expanded > .file-node-content .file-node-icon {
+    transform: rotate(90deg);
+}
+
+.outline-item {
+    padding-left: 10px;
+    border-left: 1px solid var(--border-color);
+    transition: all var(--transition-fast);
+}
+
+.outline-item:hover {
+    border-left-color: var(--primary-color);
+    background-color: var(--primary-dim);
+}
+
+.outline-item.outline-active {
+    color: var(--primary-color);
+    font-weight: bold;
+    border-left: 2px solid var(--primary-color);
+    background: linear-gradient(90deg, var(--primary-dim), transparent);
+}
+
+#typora-sidebar ::-webkit-scrollbar { width: 4px; }
+#typora-sidebar ::-webkit-scrollbar-thumb { background-color: rgba(0, 0, 0, 0.1); border-radius: 4px; }
+#typora-sidebar ::-webkit-scrollbar-thumb:hover { background-color: var(--primary-color); }
+
+footer.ty-footer {
+    border-top: 1px solid var(--border-color);
+    background-color: var(--side-bar-bg-color);
+}
+
+.md-search-hit {
+    background-color: rgba(255, 223, 93, 0.5); 
+    color: inherit;
+}
+.md-search-hit.md-search-select {
+    background-color: rgba(255, 189, 46, 0.8); 
+    border-bottom: 2px solid var(--secondary-accent);
+}
+
+/* =========================================================
+   打印与导出优化 (Export & Print)
+   ========================================================= */
+@media print {
+    html {
+        font-size: 14px; /* 打印时字号稍小 */
+    }
+    body, #write {
+        background: white !important; /* 强制白底 */
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    content {
+        background-image: none !important; /* 移除纹理 */
+    }
+    .md-fences, .md-math-block, blockquote, .md-toc, kbd {
+        box-shadow: none !important; /* 移除阴影 */
+        background-color: transparent !important;
+        border: 1px solid #ddd !important;
+    }
+    .md-fences::before, .md-fences::after {
+        display: none !important; /* 移除红绿灯 */
+    }
+    .md-fences {
+        padding-top: 15px !important;
+    }
+    a {
+        text-decoration: none;
+        color: black !important;
+        font-weight: bold;
+    }
+}
