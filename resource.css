@@ -1,300 +1,360 @@
 /* =========================================================
-   山水·数理 (Shan-shui: Logic) - Ultimate Edition
-   =========================================================
-   版本：V3.5 (0xProto + Academic Suite)
-   风格：现代学术、理性、深青色系、黑板/蓝图质感
-   包含特性：
-     1. 0xProto 极客代码字体
-     2. 智能网格背景 (深色点阵/浅色方格)
-     3. 学术级三线表 (Three-line Table)
-     4. LaTeX 公式卡片化展示
-     5. 结构化标题与教科书式引用
-*/
+   山水·数理 (Shan-shui: Logic) - Flow Edition V6.0
+   Design: Refined for Cherry Studio
+   Update: 增加生动感、微交互动效与光影流转
+   ========================================================= */
 
-/* ---------------------------------------------------------
-   一、全局变量定义 (ROOT VARIABLES)
-   --------------------------------------------------------- */
 :root {
-    /* --- 核心色板 (山水深青色系) --- */
-    --color-white-soft: #F2F5F6;
-    --color-black-soft: #1A3038;
+    /* --- 字体系统 --- */
+    --font-code: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+    --font-body: "HarmonyOS Sans", "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
     
-    /* 主题色：深青色 (Deep Teal) */
-    --color-primary: #2F545D;
-    --color-primary-soft: rgba(47, 84, 93, 0.6);
-    --color-primary-mute: rgba(47, 84, 93, 0.2);
-
-    /* --- [关键] 字体定义 --- */
-    /* 1. 代码字体：优先使用 0xProto Nerd Font，回退到 JetBrains/Consolas */
-    --font-code: "0xProto Nerd Font Mono", "0xProto", "JetBrains Mono", "Fira Code", "Consolas", monospace;
-    
-    /* 2. 正文字体：针对中文优化的学术/系统字体栈 (防止中文发虚) */
-    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
-
-    /* --- 圆角变量 (理性几何感) --- */
-    --radius-ui: 8px;       /* 输入框、按钮：稍紧凑，更显干练 */
-    --radius-bubble: 12px;  /* 消息气泡：保持流畅，不过分圆润 */
+    /* --- 动效与圆角 --- */
+    --radius-ui: 10px;
+    --radius-card: 14px;
+    --transition-speed: 0.3s;
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1); /* 弹性动效曲线 */
 }
 
 /* ---------------------------------------------------------
-   二、全局排版与基础质感 (TYPOGRAPHY & BASE)
-   --------------------------------------------------------- */
-
-/* 1. 正文设置 */
-body {
-    font-family: var(--font-body);
-    letter-spacing: 0.015em; /* 稍微增加字间距，提升阅读透气感 */
-    -webkit-font-smoothing: antialiased; /* 让字体渲染更平滑 */
-}
-
-/* 2. 代码块设置 (核心修改) */
-code, pre, .code-block, .ant-typography code {
-    font-family: var(--font-code) !important;
-    font-variant-ligatures: normal; /* 允许连字特性 (如 => 变成箭头) */
-    font-size: 0.92em; /* 代码字体微调缩小，使其更精致 */
-}
-
-/* 3. 气泡与容器形态修正 */
-.bubble, .message-content, .ant-card, .ant-collapse {
-    border-radius: var(--radius-bubble) !important;
-}
-.ant-btn, .ant-input, .input-box {
-    border-radius: var(--radius-ui) !important;
-}
-
-/* ---------------------------------------------------------
-   三、深色模式配置 (DARK MODE - 黑板·磨砂)
+   一、深色模式 (DARK MODE - 流光夜色)
    --------------------------------------------------------- */
 body[theme-mode="dark"] {
-    --color-background: #1A3038;      /* 深青黑背景 */
-    --color-background-mute: #223940; 
-    --color-background-soft: #2A454D; 
+    /* 背景：午夜青黑 */
+    --color-bg-base: #0F171A;
+    --color-bg-card: rgba(22, 34, 40, 0.7); /* 增加透明度以支持磨砂 */
+    --color-bg-hover: #1C2B33;
+
+    /* 主色调：青黛色 (高亮文本、链接) */
+    --color-primary: #5FB3C5; 
+    --color-primary-dim: rgba(95, 179, 197, 0.15);
+    --color-glow: rgba(95, 179, 197, 0.4); /* 发光效果色 */
     
-    /* 网格线：极淡的青灰色点阵 */
-    --grid-color: rgba(230, 237, 239, 0.03); 
+    /* 文字系统 */
+    --color-text-main: #E3ECEF;
+    --color-text-sub: #8B9FA6;
+    --color-text-code: #A7C5D1;
 
-    --navbar-background-mac: rgba(26, 48, 56, 0.85);
-    --navbar-background: #1A3038;
-    
-    /* 聊天区背景 */
-    --chat-background: #1A3038;
-    --chat-background-user: #243942;   /* 用户气泡：深青灰 */
-    --chat-background-assistant: #2C4A52; /* AI气泡：稍亮的青色 */
+    /* 边框与分割线 */
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-hover: rgba(95, 179, 197, 0.3);
 
-    /* [代码块背景] 加深，模拟终端窗口 (Terminal) */
-    --color-code-bg: rgba(0, 0, 0, 0.25); 
-
-    --color-text: #E6EDEF;            /* 主文本：月白色 */
-    --color-text-dim: #9FB3B8;        /* 次要文本：灰青色 */
-
-    --color-hover: #2D4B53;
-    --color-border: rgba(230, 237, 239, 0.1);
-    --color-border-soft: rgba(230, 237, 239, 0.05);
+    /* 代码块背景 (深邃黑) */
+    --code-bg: #0A0E10;
+    --code-header: #141C20;
 }
 
-/* [纹理] 深色模式背景：点阵 (Dot Grid) */
+/* ---------------------------------------------------------
+   二、浅色模式 (LIGHT MODE - 晨曦微光)
+   --------------------------------------------------------- */
+body[theme-mode="light"] {
+    /* 背景：云水白 */
+    --color-bg-base: #F7F9FA;
+    --color-bg-card: rgba(255, 255, 255, 0.85);
+    --color-bg-hover: #EEF2F4;
+
+    /* 主色调：竹青色 */
+    --color-primary: #2A6E78;
+    --color-primary-dim: rgba(42, 110, 120, 0.08);
+    --color-glow: rgba(42, 110, 120, 0.2);
+
+    /* 文字系统 */
+    --color-text-main: #2C3E45;
+    --color-text-sub: #637A82;
+    --color-text-code: #3D5A66;
+
+    /* 边框 */
+    --color-border: rgba(0, 0, 0, 0.06);
+    --color-border-hover: rgba(42, 110, 120, 0.2);
+
+    /* 代码块背景 (浅灰蓝) */
+    --code-bg: #F0F4F5;
+    --code-header: #E6EBED;
+}
+
+/* ---------------------------------------------------------
+   三、全局容器与背景纹理
+   --------------------------------------------------------- */
+body {
+    font-family: var(--font-body);
+    color: var(--color-text-main);
+    background-color: var(--color-bg-base);
+    line-height: 1.75; 
+}
+
+/* 背景纹理：更细腻 */
+#content-container, .conversation-list {
+    background-color: var(--color-bg-base) !important;
+}
+
+/* 暗色：流动的星阵 */
 body[theme-mode="dark"] #content-container {
-    background-color: #1A3038 !important;
-    background-image: radial-gradient(var(--grid-color) 1px, transparent 1px);
+    background-image: radial-gradient(var(--color-border) 1.5px, transparent 1.5px);
     background-size: 24px 24px;
 }
 
-/* [代码] 深色模式代码块特别优化 */
-body[theme-mode="dark"] pre, 
-body[theme-mode="dark"] code {
-    background-color: var(--color-code-bg) !important;
-    border: 1px solid rgba(255,255,255,0.05); /* 极细的高光边框 */
-    border-radius: 6px;
-}
-
-/* ---------------------------------------------------------
-   四、浅色模式配置 (LIGHT MODE - 蓝图·宣纸)
-   --------------------------------------------------------- */
-body[theme-mode="light"] {
-    --color-background: #E6EDEF;       /* 月白青背景 */
-    --color-background-mute: #D5E0E3;
-    --color-background-soft: #DCE6E9;
-
-    /* 网格线：极淡的墨色方格 */
-    --grid-color: rgba(47, 84, 93, 0.03);
-
-    --navbar-background: #E0EAED;
-    --chat-background: #ECF2F4;
-    --chat-background-user: #FFFFFF;   /* 用户气泡：纯白 */
-    --chat-background-assistant: #E3EBED; /* AI气泡：淡青灰 */
-
-    /* [代码块背景] 极淡的灰青色，护眼 */
-    --color-code-bg: #F0F5F7; 
-
-    --color-text: #2F545D; /* 深墨色文本 */
-    
-    --color-border: rgba(47, 84, 93, 0.1);
-    --color-border-soft: rgba(47, 84, 93, 0.05);
-    --color-white: #FFFFFF;
-}
-
-/* [纹理] 浅色模式背景：方格 (Graph Grid) */
+/* 亮色：宣纸格 */
 body[theme-mode="light"] #content-container {
-    background-color: #ECF2F4 !important;
     background-image: 
-        linear-gradient(var(--grid-color) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-    background-size: 32px 32px; /* 格子稍微放大，更大气 */
-}
-
-/* [代码] 浅色模式代码块特别优化 */
-body[theme-mode="light"] pre, 
-body[theme-mode="light"] code {
-    background-color: var(--color-code-bg) !important;
-    border: 1px solid rgba(47, 84, 93, 0.05);
-    border-radius: 6px;
+        linear-gradient(var(--color-border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+    background-size: 32px 32px;
 }
 
 /* ---------------------------------------------------------
-   五、UI 细节精修 (UI REFINEMENTS)
+   四、对话气泡与动效 (Vivid 核心)
    --------------------------------------------------------- */
 
-/* 1. 输入框区域：毛玻璃 + 顶部微边框 */
-.chat-input-area {
-    background: rgba(var(--color-background), 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-top: 1px solid var(--color-border-soft);
+/* 入场动画 Keyframes */
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* 2. 气泡边框与阴影 */
-.bubble {
-    border: 1px solid var(--color-border-soft);
-    /* 极度克制的阴影，仅用于增加层次感，避免脏显 */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); 
+/* 通用气泡样式 */
+.message-item, .bubble {
+    border-radius: var(--radius-card);
+    transition: all var(--transition-speed) ease;
+    /* 核心动效应用 */
+    animation: slideInUp 0.4s var(--ease-bounce) forwards; 
+    backdrop-filter: blur(10px); /* 磨砂玻璃质感 */
+    -webkit-backdrop-filter: blur(10px);
 }
 
-/* 3. 选中高亮 (Selection) */
-::selection {
-    background: rgba(47, 84, 93, 0.25); /* 使用主题色的半透明版 */
-    color: inherit;
+/* 用户气泡：微渐变 */
+.message-item.is-user .bubble {
+    background: linear-gradient(145deg, var(--color-primary-dim), transparent) !important;
+    border: 1px solid var(--color-primary);
+    color: var(--color-text-main);
 }
 
-/* 4. 滚动条美化 (Chrome/Edge) */
+/* AI 气泡：卡片悬浮感 */
+.message-item:not(.is-user) .bubble {
+    background-color: var(--color-bg-card) !important;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+/* 鼠标悬停 AI 气泡时微微上浮 */
+.message-item:not(.is-user):hover .bubble {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    border-color: var(--color-border-hover);
+}
+
+/* ---------------------------------------------------------
+   五、Markdown 内容生动化
+   --------------------------------------------------------- */
+
+/* 1. 标题：辉光与装饰 */
+h1, h2, h3, h4 {
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    color: var(--color-primary);
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+h1, h2 {
+    border-bottom: 1px dashed var(--color-border-hover);
+    padding-bottom: 0.3em;
+    position: relative;
+}
+
+/* 暗色模式下标题的微弱发光 */
+body[theme-mode="dark"] h1, 
+body[theme-mode="dark"] h2 {
+    text-shadow: 0 0 15px var(--color-glow);
+}
+
+/* 2. 正文重点 (加粗) */
+strong {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+/* 3. 代码块 (Mac 窗口风格 - 增加交互) */
+pre {
+    background-color: var(--code-bg) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: 8px !important;
+    padding-top: 32px !important; 
+    position: relative;
+    margin: 1.2em 0;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+pre:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    border-color: var(--color-border-hover) !important;
+}
+
+/* 伪元素制作 Mac 按钮 - 悬停时变亮 */
+pre::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #FF5F56; 
+    box-shadow: 18px 0 0 #FFBD2E, 36px 0 0 #27C93F; 
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+pre:hover::before { opacity: 1; }
+
+/* 顶部栏 */
+pre::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background-color: var(--code-header);
+    border-bottom: 1px solid var(--color-border);
+    border-radius: 8px 8px 0 0;
+    z-index: 0;
+}
+
+code {
+    font-family: var(--font-code) !important;
+    color: var(--color-text-code);
+    font-size: 0.9em;
+    z-index: 1;
+    position: relative;
+}
+
+/* 行内代码：轻微背景光晕 */
+p code, li code {
+    background-color: var(--color-primary-dim);
+    color: var(--color-primary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin: 0 2px;
+    border: 1px solid transparent;
+}
+p code:hover, li code:hover {
+    border-color: var(--color-primary);
+}
+
+/* 4. 引用块 (Blockquote) */
+blockquote {
+    border-left: 4px solid var(--color-primary);
+    background: linear-gradient(90deg, var(--color-primary-dim), transparent);
+    margin: 1em 0;
+    padding: 10px 16px;
+    color: var(--color-text-sub);
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 5. 链接 (Links) - 动态下划线 */
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    position: relative;
+    font-weight: 500;
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1.5px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--color-primary);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/* 6. 表格 (三线表风格) */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1.5em 0;
+    font-size: 0.95em;
+    overflow: hidden;
+    border-radius: 8px; /* 表格圆角 */
+}
+
+th {
+    border-top: 2px solid var(--color-primary);
+    border-bottom: 2px solid var(--color-primary);
+    padding: 12px 10px;
+    text-align: left;
+    background-color: var(--color-primary-dim);
+    color: var(--color-text-main);
+}
+
+td {
+    border-bottom: 1px solid var(--color-border);
+    padding: 10px;
+    color: var(--color-text-sub);
+    transition: background-color 0.2s;
+}
+
+/* 表格行悬停高亮 */
+tr:hover td {
+    background-color: var(--color-bg-hover);
+}
+
+tr:last-child td {
+    border-bottom: 2px solid var(--color-primary); 
+}
+
+/* ---------------------------------------------------------
+   六、UI 细节修正与输入区
+   --------------------------------------------------------- */
+
+/* 滚动条 */
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
 ::-webkit-scrollbar-thumb {
-    background: var(--color-border);
-    border-radius: 3px;
+    background-color: var(--color-border-hover);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-primary);
 }
 ::-webkit-scrollbar-track {
     background: transparent;
 }
 
-/* Bug fixes (兼容性修复) */
-.bubble .message-user .message-action-button:hover {
-  background-color: var(--color-background-mute);
-}
-body[theme-mode="dark"]{
-    --color-list-item: var(--color-background-soft) !important;
-    --color-list-item-hover: var(--color-background-soft) !important;
-}
-body[theme-mode="light"]{
-    --color-list-item: var(--color-background-soft) !important;
-    --color-list-item-hover: var(--color-background-soft) !important;
+/* 输入框区域：聚焦光晕 */
+.chat-input-area {
+    background-color: var(--color-bg-card) !important;
+    border-top: 1px solid var(--color-border);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.02);
+    backdrop-filter: blur(10px);
+    transition: border-color 0.3s;
 }
 
-/* =========================================================
-   六、专家级优化模块 (EXPERT MODULES)
-   以下模块用于增强Markdown渲染的专业度
-   ========================================================= */
-
-/* --- 模块 1: 学术级三线表 (Three-line Table) --- */
-/* 去除复杂的纵横网格，仅保留顶、底和表头横线，符合 IEEE/Nature 规范 */
-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 16px 0;
-    font-variant-numeric: tabular-nums; /* 数字等宽对齐 */
+.chat-input-area:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 -4px 20px var(--color-primary-dim);
 }
 
-th {
-    border-top: 2px solid var(--color-primary);      /* 顶线：粗 */
-    border-bottom: 1px solid var(--color-primary-soft); /* 表头底线：细 */
-    border-left: none !important;
-    border-right: none !important;
-    background: transparent !important;
-    padding: 12px 8px;
-    font-weight: 600;
-    text-align: left;
-    color: var(--color-text);
-}
-
-td {
-    border-bottom: 1px solid var(--color-border-soft); /* 行底线：极细 */
-    border-left: none !important;
-    border-right: none !important;
-    padding: 10px 8px;
-    color: var(--color-text);
-}
-
-tr:last-child td {
-    border-bottom: 2px solid var(--color-primary); /* 底线：粗封口 */
-}
-
-/* --- 模块 2: 数学公式增强 (Math/LaTeX Styling) --- */
-/* 行内公式 */
-.katex {
-    font-size: 1.05em; /* 稍微放大公式，提高可读性 */
-    padding: 0 2px;
-}
-
-/* 独立公式块：卡片化展示，增加仪式感 */
+/* LaTeX 公式优化 */
 .katex-display {
-    background: var(--color-primary-mute); /* 极淡的主题色背景 */
-    padding: 16px;
+    padding: 1em;
+    background-color: var(--color-bg-card);
     border-radius: 8px;
-    border-left: 3px solid var(--color-primary); /* 左侧“定理线” */
-    margin: 16px 0;
+    border: 1px solid var(--color-border);
     overflow-x: auto;
+    transition: box-shadow 0.3s;
 }
-/* 浅色模式下公式背景更淡 */
-body[theme-mode="light"] .katex-display {
-    background: rgba(47, 84, 93, 0.04);
-}
-
-/* --- 模块 3: 教科书式引用 (Callouts) --- */
-/* 将引用块变成带有左侧装饰条的“旁注”风格 */
-blockquote {
-    border-left: 4px solid var(--color-primary);
-    background: linear-gradient(90deg, var(--color-primary-mute) 0%, transparent 100%);
-    margin: 16px 0;
-    padding: 12px 20px;
-    border-radius: 0 8px 8px 0;
-    color: var(--color-text);
-    font-style: italic;
-}
-
-/* --- 模块 4: 结构化标题 (Structural Headers) --- */
-/* 给 H1-H3 标题左侧增加装饰块，增强锚点感 */
-h1, h2, h3 {
-    position: relative;
-    padding-left: 16px;
-    margin-top: 24px;
-    margin-bottom: 16px;
-    font-weight: 700;
-}
-
-h1::before, h2::before, h3::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 6px;
-    height: 16px; /* 装饰方块高度 */
-    background-color: var(--color-primary);
-    border-radius: 2px;
-}
-
-h1 {
-    border-bottom: 1px solid var(--color-border-soft); /* H1 额外增加底部分割线 */
-    padding-bottom: 8px;
+.katex-display:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
